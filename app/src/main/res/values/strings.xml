@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">CustomListView</string>
+    <string name="main_title">남산골선샤인</string>
+    <string name="title_activity_sliding">SlidingActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="title_activity_navigator_">Navigator_Activity</string>
+    <string name="nick1">남산골선샤인에서 포로로 사로잡힌</string>
+    <string name="nick2">독립투사를 구해주세요!</string>
+    <string name="nick3">게임 참가전에 당신의 이름을..</string>
+    <string name="nick4">닉네임을 입력해주세요.</string>
+    <string name="always_quiz_title">지피지기면 백전백승!</string>
+    <string name="always_quiz_desc">지피지기면 백전백승! \n5분이내로 문제를 풀어주세요\n포인트적립가능</string>
+    <string name="always_quiz_num_1">서울천년타임캡슐광에는 타임캡슐이\n묻혀있다. 타임캡슐의 매설일자는\n1994년 11월 29일이다. 그렇다면\n개봉일자는 2394년 11월 29일이다.</string>
+</resources>

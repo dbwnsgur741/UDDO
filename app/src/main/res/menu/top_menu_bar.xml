@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <item
+            android:icon="@drawable/ic_airplanemode_active_black_24dp"
+            android:id="@+id/action_settings"
+            android:title="TEST"
+            />
+        <item
+            android:id="@+id/second_page"
+            android:icon="@android:drawable/sym_action_chat"
+            android:title="TEST2" />
+        <item
+            android:id="@+id/third_page"
+            android:icon="@android:drawable/btn_star_big_on"
+            android:title="TEST3" />
+</menu>
