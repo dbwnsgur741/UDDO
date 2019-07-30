@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:text="축하합니다!!\n50포인트를\n획득했습니다."/>
+        android:text="오답입니다.\n다시 도전해주세요!"/>
 
     <Button
         android:id="@+id/btn_popup"

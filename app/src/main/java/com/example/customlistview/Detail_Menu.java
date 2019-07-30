@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Detail_Menu extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class Detail_Menu extends AppCompatActivity {
         if(_category.equals(CATEGORY1)){
             Intent intent1 = new Intent(getApplicationContext(),Category_Always_Quiz.class);
             startActivity(intent1);
+            finish();
         }
         else if(_category.equals(CATEGORY2)){
             txt.setText("@@@");
@@ -34,7 +36,9 @@ public class Detail_Menu extends AppCompatActivity {
             txt.setText("###");
         }
         else if(_category.equals(CATEGORY4)){
-            txt.setText("$$$$");
+            Intent intent4 = new Intent(getApplicationContext(),Take_Picture_Mission.class);
+            startActivity(intent4);
+            finish();
         }
         else if(_category.equals(CATEGORY5)){
             txt.setText("%%%%");

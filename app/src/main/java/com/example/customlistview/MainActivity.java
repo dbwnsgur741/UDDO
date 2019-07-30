@@ -1,37 +1,40 @@
 package com.example.customlistview;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public SharedPreferences sf;
+    public String sf_txt;
+    public int mp;
+    public int START_TIME_5_MIN = 3000;
+    private int sec;
+    private int tmin;
+    private int min;
+
+    private TextView timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +45,23 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        View include01 = findViewById(R.id.include1);
+        View include02 = include01.findViewById(R.id.include2);
+        TextView point = (TextView) findViewById(R.id.my_point_text);
+
         // <!--SharedPreferences --!>
 
-        SharedPreferences sf = getSharedPreferences("NamSan",MODE_PRIVATE);
-        String sf_txt = sf.getString("NickName","");
+        sf = getSharedPreferences("NamSan",MODE_PRIVATE);
+        sf_txt = sf.getString("NickName","");
+        mp = sf.getInt("myPoint",0);
+
+        Log.d("@@", String.valueOf(mp));
 
         TextView name_mission = (TextView)findViewById(R.id.name_mission);
         name_mission.setText(sf_txt + "님의 지령지");
+        point.setText(String.valueOf(mp));
 
         //  <!--리스트 뷰 및 아이템 초기화 --!>
-
         ListView listView;
         final ListViewAdapter adapter;
 
@@ -77,6 +87,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        this.timer = adapter.getTimerView();
+        timer.setText("!!:!!");  // ---------> null
+
         // <!--리스트 뷰 및 아이템 초기화 끝 --!>
 
         //<!-- 상단 네비게이션 바 초기화 --!>
@@ -92,6 +105,32 @@ public class MainActivity extends AppCompatActivity
         //<!-- 네비게이션 바 초기화 끝 --!>
     }
 
+    /*
+    public void setTimer(TextView timerTextView){
+        this.timer = timerTextView;
+        getTimer();
+    }
+
+    public void getTimer(){
+        // 타이머 선언
+        Timer ntimer = new Timer();
+        TimerTask TT = new TimerTask() {
+            @Override
+            public void run() {
+                timer.setText("11:11");
+            }
+        };
+        ntimer.schedule(TT,0,1000);
+    }
+    */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sf = getSharedPreferences("NamSan",MODE_PRIVATE);
+        mp = sf.getInt("myPoint",0);
+        TextView point = (TextView) findViewById(R.id.my_point_text);
+        point.setText(String.valueOf(mp));
+    }
 
     @Override
     public void onBackPressed() {

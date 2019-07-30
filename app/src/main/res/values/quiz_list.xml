@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="quiz_type">
+        <item name="ox_quiz">0</item>
+        <item name="just_quiz">1</item>
+    </integer-array>
+
+    <string-array name="ox_quiz_list">
+        <item>초기화귀찮아</item>
+        <item>서울천년타임캡슐광에는 타임캡슐이\n묻혀있다. 타임캡슐의 매설일자는\n1994년 11월 29일이다. 그렇다면\n개봉일자는 2394년 11월 29일이다.</item>
+        <item>남산골 한옥마을의 주소는\n서울 중로구 퇴계로34길 \n28 남산한옥마을이다.</item>
+        <item>남산골 한옥마을의 시대적 배경은 \n1890년개화기시대이다.</item>
+        <item>남산골 한옥마을에 있는 한옥의 개수는 \n4개이다.</item>
+        <item>남산골 한옥마을에 있는 한옥중에는 \n실제로 친일파가 \n거주하던 한옥이 있다.</item>
+        <item>서울의 상징인 남산의 옛 이름은 \n남골산 이다.</item>
+        <item>남산골 한옥마을에 있는 \n한옥 카페의 이름은 우물이다.</item>
+        <item>남산골 한옥마을은 수도방위 \n사령부로 부터 토지를 매입하여 \n한옥을 이전,복원 하여 만들어 졌다.</item>
+        <item>남산골 한옥마을에 있는 \n전통정원에서 제일큰\n누각의 이름은 천우각이다.</item>
+        <item>지금 하고있는  프로그램의 이름은\n남산골 션샤인 이다.</item>
+    </string-array>
+
+    <integer-array name="ox_quiz_answer">
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+</resources>

@@ -18,6 +18,7 @@
             android:background="#FAFAFA">
 
             <include
+                android:id="@+id/include2"
                 layout="@layout/toolbar_point_selector">
 
             </include>

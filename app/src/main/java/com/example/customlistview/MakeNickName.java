@@ -20,6 +20,9 @@ public class MakeNickName extends Activity {
 
         // 저장된 닉네임이 있는지 확인
         SharedPreferences save_nick_sf = getSharedPreferences("NamSan",MODE_PRIVATE);
+        SharedPreferences.Editor editor = save_nick_sf.edit();
+        editor.clear();
+        editor.commit();
 
         if(save_nick_sf.getString("NickName","") != ""){
             Intent intent1 = new Intent(this, MainActivity.class);
@@ -49,6 +52,7 @@ public class MakeNickName extends Activity {
     private void saveNickName(EditText et){
         SharedPreferences preferences = getSharedPreferences("NamSan",Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("myPoint",200);
         editor.putString("NickName", et.getText().toString());
         editor.commit();
     }

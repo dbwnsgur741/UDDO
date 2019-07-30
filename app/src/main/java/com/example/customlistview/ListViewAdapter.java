@@ -1,12 +1,10 @@
 package com.example.customlistview;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.ArrayList;
 public class ListViewAdapter extends BaseAdapter {
 
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
-
+    public TextView timerTextView;
 
     public ListViewAdapter(){
 
@@ -43,6 +41,10 @@ public class ListViewAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.listview_item,parent,false);
         }
+        if (pos == 0){
+            timerTextView = (TextView) convertView.findViewById(R.id.timer);
+            timerTextView.setVisibility(View.VISIBLE);
+        }
 
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1);
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2);
@@ -54,6 +56,10 @@ public class ListViewAdapter extends BaseAdapter {
         descTextView.setText(listViewItem.getDescStr());
 
         return convertView;
+    }
+
+    public TextView getTimerView(){
+        return this.timerTextView;
     }
 
     public void addItem(String title, String desc) {
