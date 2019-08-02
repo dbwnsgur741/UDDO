@@ -3,7 +3,6 @@ package com.example.customlistview;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class MakeNickName extends Activity {
+public class Make_Name_Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class MakeNickName extends Activity {
             public void onClick(View v) {
                 if(check_nick(nick_name)){
                     saveNickName(nick_name);
-                    Intent intent = new Intent(MakeNickName.this, MainActivity.class);
+                    Intent intent = new Intent(Make_Name_Activity.this, MainActivity.class);
                     intent.putExtra("nick_name", nick_name.getText().toString());
                     startActivity(intent);
                 }

@@ -1,9 +1,11 @@
 package com.example.customlistview;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,20 +29,25 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public SharedPreferences sf;
-    public String sf_txt;
-    public int mp;
-    public int START_TIME_5_MIN = 3000;
-    private int sec;
-    private int tmin;
-    private int min;
-
+    private SharedPreferences sf;
+    private String sf_txt;
+    private int mp;
     private TextView timer;
+    private ListView listView;
+    private ListViewAdapter adapter;
+    public SharedPreferences sharedPreferences;
+    public SharedPreferences.Editor editor;
+    private int START_TIME_5_MIN ;
+    private Timer ntimer ;
+    private TimerTask TT ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         //툴바 초기화
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,17 +63,13 @@ public class MainActivity extends AppCompatActivity
         sf_txt = sf.getString("NickName","");
         mp = sf.getInt("myPoint",0);
 
-        Log.d("@@", String.valueOf(mp));
-
         TextView name_mission = (TextView)findViewById(R.id.name_mission);
         name_mission.setText(sf_txt + "님의 지령지");
         point.setText(String.valueOf(mp));
 
         //  <!--리스트 뷰 및 아이템 초기화 --!>
-        ListView listView;
-        final ListViewAdapter adapter;
 
-        adapter = new ListViewAdapter();
+        this.adapter = new ListViewAdapter();
 
         listView = (ListView) findViewById(R.id.listview1);
         listView.setAdapter(adapter);
@@ -76,19 +80,20 @@ public class MainActivity extends AppCompatActivity
         adapter.addItem("사진미션","애국동지들과 추억쌓기");
         adapter.addItem("NPC","대결,경쟁을 통해 참다운 의병이 되어라!");
         adapter.addItem("Test","test123");
-        adapter.addItem("Test2","test123");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),Detail_Menu.class);
-                intent.putExtra("category", ((ListViewItem)adapter.getItem(position)).getTitle());
-                startActivity(intent);
+                Intent intent = null;
+                switch (position) {
+                  case 0:
+                    intent = new Intent(getApplicationContext(), A_Quiz_Default_Activity.class);
+                    intent.putExtra("category", ((ListViewItem) adapter.getItem(position)).getTitle());
+                    break;
+                }
+                startActivityForResult(intent, 2000);
             }
         });
-
-        this.timer = adapter.getTimerView();
-        timer.setText("!!:!!");  // ---------> null
 
         // <!--리스트 뷰 및 아이템 초기화 끝 --!>
 
@@ -103,33 +108,86 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //<!-- 네비게이션 바 초기화 끝 --!>
+
     }
 
-    /*
-    public void setTimer(TextView timerTextView){
-        this.timer = timerTextView;
-        getTimer();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_CANCELED) {
+            if (requestCode == 2000 ) {
+                if(sharedPreferences.getInt("Timer",0) == 0){
+                    START_TIME_5_MIN = 500;
+                    editor.putInt("Timer",START_TIME_5_MIN);
+                    editor.commit();
+                    setTimer();
+                }
+                else{
+                    stopTimer();
+                    START_TIME_5_MIN = 500;
+                    editor.putInt("Timer",START_TIME_5_MIN);
+                    editor.commit();
+                    setTimer();
+                }
+            }
+        }
     }
 
-    public void getTimer(){
-        // 타이머 선언
-        Timer ntimer = new Timer();
-        TimerTask TT = new TimerTask() {
+    private void setTimer(){
+
+        START_TIME_5_MIN = sharedPreferences.getInt("Timer",0);
+
+        // 타이머 레이아웃 초기화 및 타이머 초기화
+        ntimer = new Timer();
+        timer = adapter.getTimerView();
+        TT = new TimerTask() {
             @Override
             public void run() {
-                timer.setText("11:11");
+                START_TIME_5_MIN -= 1;
+                int min = START_TIME_5_MIN / 60;
+                int sec = START_TIME_5_MIN % 60;
+                if(String.valueOf(sec).length() == 1){
+                    timer.setText(String.format("0%d:0%d",min,sec));
+                }
+                else{
+                    timer.setText(String.format("0%d:%d",min,sec));
+                }
+                if(START_TIME_5_MIN == 0){
+                    timer.setVisibility(View.GONE);
+                }
             }
         };
         ntimer.schedule(TT,0,1000);
     }
-    */
+
+    private void stopTimer(){
+        TT.cancel();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+
+        // <!-- 다시돌아왔을때 포인트 변화 부분 --!> //
+
         sf = getSharedPreferences("NamSan",MODE_PRIVATE);
         mp = sf.getInt("myPoint",0);
         TextView point = (TextView) findViewById(R.id.my_point_text);
         point.setText(String.valueOf(mp));
+
+        if(TT != null){
+            TT.cancel();
+            setTimer();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        editor.putInt("Timer",this.START_TIME_5_MIN);
+        editor.commit();
     }
 
     @Override

@@ -1,11 +1,6 @@
 package com.example.customlistview;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 public class MySingleton {
 
@@ -18,7 +13,6 @@ public class MySingleton {
     private static int[] quiz_answer_array; // 리스트에 대한 정답 배열
     private String quiz_desc; // 퀴즈 번호에 따른 문제 설명
     private int quiz_answer; // 정답
-
     private int quiz_num ; // 퀴즈 번호
     private String what_quiz ; // 레이아웃 왼쪽 상단
 
@@ -64,4 +58,5 @@ public class MySingleton {
     public void setQuiz_answer(int quiz_num) {
         this.quiz_answer = quiz_answer_array[quiz_num];
     }
+
 }

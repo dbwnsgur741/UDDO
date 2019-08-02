@@ -15,21 +15,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".Take_Picture_Mission"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-
-        <activity
-            android:name=".Take_Picture_Defaualt"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-
-        <activity
-            android:name=".Category_Always_Quiz"
+            android:name=".A_Quiz_Default_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".Always_Quiz_Detail"
+            android:name=".A_Quiz_Detail_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
@@ -38,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".Detail_Menu"
+            android:name=".Get_Category"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
@@ -48,7 +38,7 @@
         </activity>
 
         <activity
-            android:name=".MakeNickName">
+            android:name=".Make_Name_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
