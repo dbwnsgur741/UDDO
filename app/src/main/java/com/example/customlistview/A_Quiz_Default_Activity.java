@@ -2,6 +2,8 @@ package com.example.customlistview;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +11,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class A_Quiz_Default_Activity extends AppCompatActivity{
+
+    private SharedPreferences sharedPreferences;
+    private int START_TIME_5_MIN;
+    private Timer ntimer;
+    private TimerTask TT;
+    private TextView tmr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +33,11 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.always_quiz_toolbar_top);
         setSupportActionBar(toolbar);
+
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.default_layout);
+
+        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        tmr = (TextView) findViewById(R.id.timer_layout);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowHomeEnabled(true);

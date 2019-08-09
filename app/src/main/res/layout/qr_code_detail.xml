@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/qr_code_detail_toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/qr_code_detail_toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해독 결과"
+            android:layout_marginLeft="15dp"
+            android:textSize="24dp"/>
+
+        <TextView
+            android:id="@+id/qr_quiz_desc"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="일제강점기의 독립운동가.\n1932년 4월 29일 일왕의 생일 행사장에\n폭탄을 던져 일본 상하이 파견군 대장 등을\n즉사시키는 거사를 치르고 현장에서 최포되어 총살되었다."/>
+
+        <EditText
+            android:id="@+id/edt_QuizText"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:background="@drawable/box_rectangle_stroke"
+            android:id="@+id/qr_code_detail_apply_btn"
+            android:layout_marginTop="30dp"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColorHint="#000000"
+            android:hint="제출하기" />
+
+    </LinearLayout>
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

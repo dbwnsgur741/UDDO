@@ -3,17 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.customlistview">
 
-    <uses-feature android:name="android.hardware.camera"
-        android:required="true"/>
+    <uses-feature
+        android:name="android.permission.CAMERA"
+        android:required="true" />
+
+    <uses-permission
+        android:name="android.permission.CAMERA">
+    </uses-permission>
 
     <application
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".QR_PointManager"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".QR_Code_Quiz_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
 
+        <activity
+            android:name=".QR_Code_Detail_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".QR_Code_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".A_Quiz_Default_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

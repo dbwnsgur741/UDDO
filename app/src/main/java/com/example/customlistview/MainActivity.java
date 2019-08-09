@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         adapter.addItem("보물찾기","일본군영(4)에서 아이템을 획득하라!");
         adapter.addItem("사진미션","애국동지들과 추억쌓기");
         adapter.addItem("NPC","대결,경쟁을 통해 참다운 의병이 되어라!");
-        adapter.addItem("Test","test123");
+        adapter.addItem("QRTEST","QRTEST");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,9 +89,14 @@ public class MainActivity extends AppCompatActivity
                   case 0:
                     intent = new Intent(getApplicationContext(), A_Quiz_Default_Activity.class);
                     intent.putExtra("category", ((ListViewItem) adapter.getItem(position)).getTitle());
+                    startActivityForResult(intent, 2000);
+                    break;
+                  case 5:
+                    intent = new Intent(getApplicationContext(), QR_Code_Activity.class);
+                    intent.putExtra("category",((ListViewItem)adapter.getItem(position)).getTitle());
+                    startActivityForResult(intent,3000);
                     break;
                 }
-                startActivityForResult(intent, 2000);
             }
         });
 
@@ -135,7 +140,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setTimer(){
+    protected void setTimer(){
 
         START_TIME_5_MIN = sharedPreferences.getInt("Timer",0);
 
