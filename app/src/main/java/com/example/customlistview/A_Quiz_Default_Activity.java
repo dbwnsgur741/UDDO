@@ -21,11 +21,11 @@ import java.util.TimerTask;
 public class A_Quiz_Default_Activity extends AppCompatActivity{
 
     private SharedPreferences sharedPreferences;
-    private int START_TIME_5_MIN;
-    private Timer ntimer;
-    private TimerTask TT;
     private TextView tmr;
-
+    private Long timer_check;
+    private Timer ntimer ;
+    private TimerTask TT ;
+    private ImageButton ib;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +36,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
 
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.default_layout);
 
-        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
-        tmr = (TextView) findViewById(R.id.timer_layout);
-
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
-        ImageButton ib = (ImageButton) findViewById(R.id.next_step);
+        ib = (ImageButton) findViewById(R.id.next_step);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +45,63 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
                 finish();
             }
         });
+
+        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        timer_check = sharedPreferences.getLong( "Timer",0 );
+        setTimer_check( timer_check );
+
+        tmr = (TextView) findViewById(R.id.timer_layout);
+
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+    }
+
+    private void setTimer_check(final Long time){
+        if(time > 0 ){
+            ib.setVisibility( View.GONE );
+            ntimer = new Timer();
+            TT = new TimerTask() {
+                @Override
+                public void run() {
+                    long TIME_NOW = System.currentTimeMillis();
+                    int TIMER = 300;
+                    int temp = ((int)(TIME_NOW - time))/1000;
+                    int temp2 = TIMER - temp;
+
+                    int min = temp2 / 60;
+                    int sec = temp2 % 60;
+
+                    if(String.valueOf(sec).length() == 1){
+                        tmr.setText(String.format("0%d:0%d",min,sec));
+                    }
+                    else{
+                        tmr.setText(String.format("0%d:%d",min,sec));
+                    }
+                    if(temp2 == 0){
+                        TT.cancel();
+                        tmr.setText("퀴즈풀기!");
+                    }
+                }
+            };
+            ntimer.schedule(TT,0,1000);
+        }
+        else{
+            ib.setVisibility( View.VISIBLE );
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(TT != null){
+            TT.cancel();
+            setTimer_check( timer_check );
+        }
+
     }
 
     @Override
@@ -70,8 +118,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent1);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

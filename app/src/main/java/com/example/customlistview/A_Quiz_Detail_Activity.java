@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,15 @@ import android.widget.TextView;
 
 public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.OnClickListener {
 
-
     public int quiz_number ;
     public String quiz_description ;
     public String what_quiz ;
     public boolean flag;
     public MySingleton mySingleton;
-    ImageButton corbx;
-    ImageButton falbx;
+    private ImageButton corbx;
+    private ImageButton falbx;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,10 +34,10 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
         IntiailzeView();
 
         mySingleton = MySingleton.getInstance(this);
-        SharedPreferences sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         if(sharedPreferences.getInt("Quiz1",0) == 0 ){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("Quiz1",1);
             editor.commit();
         }
@@ -86,6 +88,7 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
+                    setTimer();
                     setResult(1000);
                     finish();
                 }
@@ -94,6 +97,7 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     alertDialog.dismiss();
+                    setTimer();
                     setResult(1000);
                     finish();
                 }
@@ -112,6 +116,7 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
+                    setTimer();
                     setResult(1000);
                     finish();
                 }
@@ -120,11 +125,19 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     alertDialog.dismiss();
+                    setTimer();
                     setResult(1000);
                     finish();
                 }
             });
         }
+    }
+
+    public void setTimer(){
+        long eventTime =  System.currentTimeMillis();
+        Log.d("tttttttttt", String.valueOf( eventTime ) );
+        editor.putLong( "Timer", eventTime );
+        editor.commit();
     }
 
     @Override

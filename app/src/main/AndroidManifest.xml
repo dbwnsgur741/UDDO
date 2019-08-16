@@ -4,11 +4,12 @@
     package="com.example.customlistview">
 
     <uses-feature
-        android:name="android.permission.CAMERA"
+        android:name="android.hardware.CAMERA"
         android:required="true" />
 
     <uses-permission
-        android:name="android.permission.CAMERA">
+        android:maxSdkVersion="18"
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE">
     </uses-permission>
 
     <application
@@ -19,6 +20,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <activity
+            android:name=".Picture_detail_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Picture_default_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".QR_PointManager"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -66,6 +76,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.customlistview.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
     </application>
 
 </manifest>

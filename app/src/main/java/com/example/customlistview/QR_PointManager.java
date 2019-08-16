@@ -71,7 +71,7 @@ public class QR_PointManager extends AppCompatActivity {
             btn2.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setResult( 20 );
+                    setResult( 30 );
                     finish();
                 }
             } );

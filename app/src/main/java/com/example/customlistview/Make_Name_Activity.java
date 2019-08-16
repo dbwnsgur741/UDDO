@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+
 
 public class Make_Name_Activity extends Activity {
 
@@ -22,6 +24,9 @@ public class Make_Name_Activity extends Activity {
         SharedPreferences.Editor editor = save_nick_sf.edit();
         editor.clear();
         editor.commit();
+
+        File f = getCacheDir();
+
 
         if(save_nick_sf.getString("NickName","") != ""){
             Intent intent1 = new Intent(this, MainActivity.class);

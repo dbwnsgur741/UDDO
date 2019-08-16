@@ -2,6 +2,7 @@ package com.example.customlistview;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +29,12 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
     private String qr_quiz_desc;
     private String qr_quiz_answer;
     private String user_answer;
-    private final String[] QR_CODE= {"","924512","936802","966509","999910"};
+    private final String[] QR_CODE= {"924512","936802","966509","999910"};
     private boolean flag;
+    private int code_index;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor ;
+    private int code_check;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +43,10 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.qr_code_detail_toolbar_top);
         setSupportActionBar(toolbar);
+
+        sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
+        editor = sharedPreferences.edit();
+        code_check = sharedPreferences.getInt( "qr_code_manager",0 );
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -79,7 +88,6 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
                         intent.putExtra( "user_answer",user_answer );
                         intent.putExtra("flag",true);
                         startActivityForResult( intent, 20 );
-                        finish();
                     }
                     else{
                         intent = new Intent( getApplicationContext(), QR_PointManager.class );
@@ -106,9 +114,9 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
     }
 
     public void setQr_quiz(String num) {
-        int index = Arrays.binarySearch(QR_CODE,num);
-        Log.d("!!!!!!!", String.valueOf( index ) );
-        this.qr_quiz_desc = qr_quiz_array[index];
+        code_index = Arrays.binarySearch(QR_CODE,num);
+        Log.d("!!!!!!!", String.valueOf( code_index ) );
+        this.qr_quiz_desc = qr_quiz_array[code_index];
     }
 
     public String getQr_quiz_answer() {
@@ -132,6 +140,12 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 20 ){
+            int qr_code_manager = (int) Math.pow( 2,code_index );
+            editor.putInt( "qr_code_manager",qr_code_manager+sharedPreferences.getInt( "qr_code_manager" ,0) );
+            editor.commit();
+            finish();
+        }
+        else if(resultCode == 30){
             finish();
         }
     }

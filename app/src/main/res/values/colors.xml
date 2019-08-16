@@ -9,4 +9,5 @@
     <color name="white">#ffffff</color>
     <color name="cAccent">#FF4081</color>
     <color name="darkgray">#6c6c6c</color>
+    <color name="picture_layout">#5C5C5C</color>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.customlistview;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -91,6 +90,10 @@ public class MainActivity extends AppCompatActivity
                     intent.putExtra("category", ((ListViewItem) adapter.getItem(position)).getTitle());
                     startActivityForResult(intent, 2000);
                     break;
+                    case 3:
+                        intent = new Intent( getApplicationContext(), Picture_default_Activity.class );
+                        startActivityForResult( intent,4000 );
+                        break;
                   case 5:
                     intent = new Intent(getApplicationContext(), QR_Code_Activity.class);
                     intent.putExtra("category",((ListViewItem)adapter.getItem(position)).getTitle());
@@ -123,44 +126,42 @@ public class MainActivity extends AppCompatActivity
 
         if (resultCode == Activity.RESULT_CANCELED) {
             if (requestCode == 2000 ) {
-                if(sharedPreferences.getInt("Timer",0) == 0){
-                    START_TIME_5_MIN = 500;
-                    editor.putInt("Timer",START_TIME_5_MIN);
-                    editor.commit();
-                    setTimer();
-                }
-                else{
+                if(TT !=null){
                     stopTimer();
-                    START_TIME_5_MIN = 500;
-                    editor.putInt("Timer",START_TIME_5_MIN);
-                    editor.commit();
-                    setTimer();
                 }
+                setTimer();
             }
         }
     }
 
     protected void setTimer(){
 
-        START_TIME_5_MIN = sharedPreferences.getInt("Timer",0);
+        final long EVENT_TIME = sharedPreferences.getLong( "Timer",0 );
 
         // 타이머 레이아웃 초기화 및 타이머 초기화
         ntimer = new Timer();
         timer = adapter.getTimerView();
+
         TT = new TimerTask() {
             @Override
             public void run() {
-                START_TIME_5_MIN -= 1;
-                int min = START_TIME_5_MIN / 60;
-                int sec = START_TIME_5_MIN % 60;
+                long TIME_NOW = System.currentTimeMillis();
+                int TIMER = 300;
+                int temp = ((int)(TIME_NOW - EVENT_TIME))/1000;
+                int temp2 = TIMER - temp;
+
+                int min = temp2 / 60;
+                int sec = temp2 % 60;
+
                 if(String.valueOf(sec).length() == 1){
                     timer.setText(String.format("0%d:0%d",min,sec));
                 }
                 else{
                     timer.setText(String.format("0%d:%d",min,sec));
                 }
-                if(START_TIME_5_MIN == 0){
-                    timer.setVisibility(View.GONE);
+                if(temp2 < 0){
+                    TT.cancel();
+                    timer.setText("퀴즈풀기!");
                 }
             }
         };
@@ -191,8 +192,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        editor.putInt("Timer",this.START_TIME_5_MIN);
-        editor.commit();
     }
 
     @Override
@@ -207,6 +206,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        stopTimer();
+        setTimer();
         return super.onOptionsItemSelected(item);
     }
 

@@ -2,6 +2,7 @@ package com.example.customlistview;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -22,9 +25,10 @@ public class QR_Code_Activity extends AppCompatActivity {
 
     private Button scan_btn;
     private BarcodeView scanner_view;
-    private String[] quiz_array= {"999910","924512","936802","966509"};
+    private final String[] QR_CODE= {"924512","936802","966509","999910"};
     private String[] point_array = {"985911","967903","910204","995605","971206","952607","974508","988501"};
     public boolean flag = true;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class QR_Code_Activity extends AppCompatActivity {
         scanner_view = (BarcodeView) findViewById(R.id.qr_scanner);
         scanner_view.decodeContinuous( callback );
 
+        sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -65,8 +70,7 @@ public class QR_Code_Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent1);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -75,20 +79,30 @@ public class QR_Code_Activity extends AppCompatActivity {
         Intent intent ;
         @Override
         public void barcodeResult(BarcodeResult result) {
-            if(Arrays.asList(quiz_array).contains( result.getText() )){
-                intent = new Intent(getApplicationContext(),QR_Code_Quiz_Activity.class);
-                intent.putExtra( "Quiz_Num",result.getText() );
-                scanner_view.setVisibility( View.INVISIBLE );
-                flag = true;
-                scan_btn.setHint( "해독하기" );
-                startActivityForResult( intent , 5000 );
+
+            if(checkArray( result.getText() )){
+
+                if(Arrays.asList(QR_CODE).contains( result.getText() )){
+                    intent = new Intent(getApplicationContext(),QR_Code_Quiz_Activity.class);
+                    intent.putExtra( "Quiz_Num",result.getText() );
+                    scanner_view.setVisibility( View.INVISIBLE );
+                    flag = true;
+                    scan_btn.setHint( "해독하기" );
+                    startActivityForResult( intent , 5000 );
+                }
+                else if(Arrays.asList(point_array).contains( result.getText() )){
+                    Log.d("@@@@@@@@", String.valueOf( result.getText() ) );
+                }
+                else{
+                    Log.d("##########", String.valueOf( result.getText() ) );
+                }
             }
-            else if(Arrays.asList(point_array).contains( result.getText() )){
-                Log.d("@@@@@@@@", String.valueOf( result.getText() ) );
-            }
+
             else{
-                Log.d("##########", String.valueOf( result.getText() ) );
+                Toast.makeText(getApplicationContext(),"이미 푼 문제입니다!\n다른 QR코드를 찾아주세요!",Toast.LENGTH_LONG).show();
+                finish();
             }
+
         }
         @Override
         public void possibleResultPoints(List<ResultPoint> resultPoints) {
@@ -114,6 +128,19 @@ public class QR_Code_Activity extends AppCompatActivity {
         else{
             scanner_view.pause();
             super.onPause();
+        }
+    }
+
+    protected boolean checkArray(String temp){
+        int qr_array_index = Arrays.binarySearch( QR_CODE,temp );
+        qr_array_index = (int) Math.pow( 2,qr_array_index );
+        int code_check = sharedPreferences.getInt( "qr_code_manager",0 );
+        byte a = (byte)(qr_array_index & code_check);
+        if(a == 0 ){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }
