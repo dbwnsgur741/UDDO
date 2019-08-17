@@ -20,7 +20,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        <activity
+            android:name=".A_Quiz_False_Acitivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".A_Quiz_Correct_Acitivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".Picture_detail_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -70,7 +77,8 @@
         </activity>
 
         <activity
-            android:name=".Make_Name_Activity">
+            android:name=".Make_Name_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

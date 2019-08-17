@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:id="@+id/textlinear">
+
+    <ImageView
+        android:layout_marginRight="25dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="@drawable/star_copy"/>
+
+    <TextView
+        android:fontFamily="@font/seoulhangangcb"
+        android:layout_width="53dp"
+        android:layout_height="18dp"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:text="퀴즈미션"/>
+
+    <ImageView
+        android:layout_marginLeft="25dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="@drawable/star_copy"/>
+</LinearLayout>

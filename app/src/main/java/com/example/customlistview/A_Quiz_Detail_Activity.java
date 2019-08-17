@@ -1,13 +1,16 @@
 package com.example.customlistview;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +35,15 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
         setContentView(R.layout.always_quiz_detail);
 
         IntiailzeView();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.always_quiz_detail_toolbar_top);
+        setSupportActionBar(toolbar);
+
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         mySingleton = MySingleton.getInstance(this);
         sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
@@ -65,7 +77,7 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
 
 
     public void correctevent(int num) {
-
+        Intent intent = null;
         SharedPreferences sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -76,66 +88,21 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
             editor.putInt("Quiz1", sharedPreferences.getInt("Quiz1",0)+1);
             editor.putInt("myPoint",sharedPreferences.getInt("myPoint",0)+50);
             editor.commit();
-            ViewGroup vg = (ViewGroup)findViewById(android.R.id.content);
-            View popUpView = LayoutInflater.from(this).inflate(R.layout.point_popup, vg , false);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(popUpView);
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-            Button btn_popup = (Button)popUpView.findViewById(R.id.btn_popup);
-
-            btn_popup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialog.dismiss();
-                    setTimer();
-                    setResult(1000);
-                    finish();
-                }
-            });
-            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    alertDialog.dismiss();
-                    setTimer();
-                    setResult(1000);
-                    finish();
-                }
-            });
+            intent = new Intent( getApplicationContext(), A_Quiz_Correct_Acitivity.class );
+            setTimer();
+            startActivity(intent);
+            finish();
         }
-        else{
-            ViewGroup vg = (ViewGroup)findViewById(android.R.id.content);
-            View popUpView = LayoutInflater.from(this).inflate(R.layout.point_popup_false, vg , false);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(popUpView);
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-            Button btn_popup = (Button)popUpView.findViewById(R.id.btn_popup);
-
-            btn_popup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialog.dismiss();
-                    setTimer();
-                    setResult(1000);
-                    finish();
-                }
-            });
-            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    alertDialog.dismiss();
-                    setTimer();
-                    setResult(1000);
-                    finish();
-                }
-            });
+        else {
+            intent = new Intent( getApplicationContext(), A_Quiz_False_Acitivity.class );
+            setTimer();
+            startActivity( intent );
+            finish();
         }
     }
 
     public void setTimer(){
         long eventTime =  System.currentTimeMillis();
-        Log.d("tttttttttt", String.valueOf( eventTime ) );
         editor.putLong( "Timer", eventTime );
         editor.commit();
     }
@@ -150,5 +117,13 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
                 correctevent(1);
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

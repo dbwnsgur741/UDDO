@@ -1,54 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:background="@drawable/bg">
 
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:id="@+id/quiz_num"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:textSize="25dp"
-        android:text="Qusetion1."
-        android:layout_weight="2"
-        android:gravity="center"/>
-
-    <TextView
-        android:id="@+id/quiz_desc"
-        android:textSize="20dp"
-        android:textAlignment="center"
-        android:gravity="center"
+    <android.support.v7.widget.Toolbar
+        android:elevation="5dp"
+        android:id="@+id/always_quiz_detail_toolbar_top"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5" />
+        android:layout_height="wrap_content"
+        app:titleTextColor="#000000">
+        <TextView
+            android:id="@+id/quiz_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/seoulhangangcb"
+            android:textSize="18sp"
+            android:text="Toolbar"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:id="@+id/always_quiz_detail_toolbar_top_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <TextView
+        android:text="서울천년타임캡슐광장에는 타임캡슐이 묻혀있다.\n타임캡슐의 매설일자는 1994년 11월 29일이다.\n그렇다면 개봉일자는 2394년 11월 29 일이다.\n맞으면 O 틀리면X"
+        android:layout_marginRight="32.5dp"
+        android:layout_marginLeft="32.5dp"
+        android:layout_marginTop="188dp"
+        android:id="@+id/quiz_desc"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:fontFamily="@font/seoulhangangcb"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="10sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:layout_marginTop="75.5dp"
         android:gravity="center">
 
         <ImageButton
             android:id="@+id/correct_box"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/title_box_round"
-            android:backgroundTint="@color/main"
-            android:src="@drawable/anwser_correct"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="69dp"
+            android:background="@drawable/correct_image" />
 
         <ImageButton
             android:id="@+id/false_box"
-            android:layout_marginLeft="10dp"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/title_box_round"
-            android:backgroundTint="@color/main"
-            android:src="@drawable/answer_false_150dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/false_image"/>
 
     </LinearLayout>
 

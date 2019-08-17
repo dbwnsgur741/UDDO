@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/seoulhangangcb"
+        android:fontStyle="normal"
+        android:fontWeight="400"></font>
+    <font
+        android:font="@font/seoulhangangceb"
+        android:fontStyle="normal"
+        android:fontWeight="400"></font>
+</font-family>

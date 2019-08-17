@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -13,6 +16,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
     public TextView timerTextView;
+    public LinearLayout linearLayout;
 
     public ListViewAdapter(){
 
@@ -37,10 +41,12 @@ public class ListViewAdapter extends BaseAdapter {
         final int pos = position;
         final Context context = parent.getContext();
 
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.listview_item,parent,false);
         }
+
         if (pos == 0){
             timerTextView = (TextView) convertView.findViewById(R.id.timer);
             timerTextView.setVisibility(View.VISIBLE);

@@ -1,62 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/default_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
+        android:elevation="5dp"
         android:id="@+id/always_quiz_toolbar_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:titleTextColor="#000000">
+        <TextView
+            android:id="@+id/always_quiz_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/seoulhangangcb"
+            android:textSize="18sp"
+            android:text="Toolbar"/>
     </android.support.v7.widget.Toolbar>
 
-    <TextView
+    <View
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:id="@+id/toolbar_shadow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="150dp"
-        android:text="@string/always_quiz_title"
-        android:textSize="30dp" />
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="200dp"
-        android:text="@string/always_quiz_desc" />
-
-    <TextView
-        android:id="@+id/timer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="350dp"
         android:gravity="center"
-        android:textColor="#ff0000"/>
+        android:fontFamily="@font/seoulhangangcb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:lineSpacingExtra="10dp"
+        android:text="5분마다 제공되는 퀴즈를 풀어서\n 포인트를 얻어 보세요!" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="78dp"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/timer_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginBottom="-15dp"
-            android:layout_marginRight="25dp"
-            android:text="퀴즈시작"/>
+            android:fontFamily="@font/seoulhangangcb"
+            android:text="다음 퀴즈까지 남은시간"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
-        <ImageButton
-            android:id="@+id/next_step"
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/timer_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:src="@drawable/forward_arrow"
-            android:background="@null"/>
+            android:textAlignment="center"
+            android:layout_toRightOf="@+id/timer_textview"
+            android:fontFamily="@font/seoulhangangcb"
+            android:text=" "
+            android:textSize="21sp"
+            android:textColor="#ff0000" />
+
     </LinearLayout>
 
-</RelativeLayout>
+    <ImageButton
+        android:layout_marginTop="64dp"
+        android:id="@+id/next_step"
+        android:layout_width="324dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:background="@drawable/app_main_btn_1" />
+
+</LinearLayout>

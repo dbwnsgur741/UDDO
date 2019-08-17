@@ -7,9 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
 
 
 public class Make_Name_Activity extends Activity {
@@ -19,14 +18,19 @@ public class Make_Name_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.make_nickname);
 
+        // TODO : "닉네임" => 글꼴변경!!
+
+        TextView textView = (TextView)findViewById( R.id.make_nick_textview );
+        String txt = "당신의 닉네임을\n 입력해주세요.";
+        textView.setText(txt);
+
+        TextView textView1 = (TextView)findViewById( R.id.make_nick_NoName );
+
         // 저장된 닉네임이 있는지 확인
         SharedPreferences save_nick_sf = getSharedPreferences("NamSan",MODE_PRIVATE);
         SharedPreferences.Editor editor = save_nick_sf.edit();
         editor.clear();
         editor.commit();
-
-        File f = getCacheDir();
-
 
         if(save_nick_sf.getString("NickName","") != ""){
             Intent intent1 = new Intent(this, MainActivity.class);
@@ -48,9 +52,24 @@ public class Make_Name_Activity extends Activity {
                     Intent intent = new Intent(Make_Name_Activity.this, MainActivity.class);
                     intent.putExtra("nick_name", nick_name.getText().toString());
                     startActivity(intent);
+                    finish();
                 }
             }
         });
+        textView1.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("NamSan",Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("myPoint",200);
+                editor.putString("NickName", "NoName");
+                editor.commit();
+                Intent intent = new Intent(Make_Name_Activity.this, MainActivity.class);
+                intent.putExtra("nick_name", "NoName");
+                startActivity(intent);
+                finish();
+            }
+        } );
     }
 
     private void saveNickName(EditText et){

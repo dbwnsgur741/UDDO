@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences sf;
     private String sf_txt;
     private int mp;
-    private TextView timer;
+
     private ListView listView;
     private ListViewAdapter adapter;
     public SharedPreferences sharedPreferences;
@@ -73,12 +74,12 @@ public class MainActivity extends AppCompatActivity
         listView = (ListView) findViewById(R.id.listview1);
         listView.setAdapter(adapter);
 
-        adapter.addItem("상시","지피지기면 백전백승\n퀴즈1이 진행중입니다.");
-        adapter.addItem("퀴즈","사라진 고종황제의 비밀금고를 열어라!");
-        adapter.addItem("보물찾기","일본군영(4)에서 아이템을 획득하라!");
-        adapter.addItem("사진미션","애국동지들과 추억쌓기");
-        adapter.addItem("NPC","대결,경쟁을 통해 참다운 의병이 되어라!");
-        adapter.addItem("QRTEST","QRTEST");
+        adapter.addItem("지피지기면 백전백승","퀴즈1이 진행중입니다.");
+        adapter.addItem("사라진 고종황제의 비밀금고를 열어라!","퀴즈 풀고 금고의 비밀번호를 받자!");
+        adapter.addItem("일본군영( 4 )에서 아이템을 획득하라!","보물찾기");
+        adapter.addItem("애국동지들과 추억쌓기","사진미션");
+        adapter.addItem("대결 경쟁을 통해 참다운 의병이 되어라!","NPC");
+        adapter.addItem("QR미션","QR미션");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,21 +125,49 @@ public class MainActivity extends AppCompatActivity
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_CANCELED) {
-            if (requestCode == 2000 ) {
-                if(TT !=null){
-                    stopTimer();
-                }
-                setTimer();
-            }
+        if (requestCode == 2000 ) {
+            setTimer();
         }
     }
 
     protected void setTimer(){
 
+        //TODO : 퀴즈풀기 텍스트 계속 세팅되어있음 --> 수정, 틀린문제 정답 세팅
+
+        final TextView timer;
+        timer = adapter.getTimerView();
+        final Handler handler = new Handler(  );
         final long EVENT_TIME = sharedPreferences.getLong( "Timer",0 );
 
+        if(EVENT_TIME > 0){
+            final Runnable runnableCode = new Runnable() {
+                @Override
+                public void run() {
+                    long TIME_NOW = System.currentTimeMillis();
+                    int TIMER = 10;
+                    int temp = ((int) (TIME_NOW - EVENT_TIME)) / 1000;
+                    int temp2 = TIMER - temp;
+                    int min = temp2 / 60;
+                    int sec = temp2 % 60;
+
+                    if (temp2 < 0) {
+                        timer.setText("퀴즈풀기!");
+                        handler.removeCallbacks( this );
+                    }
+                    else {
+                        if (String.valueOf( sec ).length() == 1) {
+                            timer.setText( String.format( "0%d:0%d", min, sec ) );
+                        } else {
+                            timer.setText( String.format( "0%d:%d", min, sec ) );
+                        }
+                    }
+                    handler.postDelayed( this, 1000 );
+                }
+            };
+            handler.post( runnableCode );
+        }
         // 타이머 레이아웃 초기화 및 타이머 초기화
+        /*
         ntimer = new Timer();
         timer = adapter.getTimerView();
 
@@ -166,6 +195,7 @@ public class MainActivity extends AppCompatActivity
             }
         };
         ntimer.schedule(TT,0,1000);
+        */
     }
 
     private void stopTimer(){
@@ -183,10 +213,7 @@ public class MainActivity extends AppCompatActivity
         TextView point = (TextView) findViewById(R.id.my_point_text);
         point.setText(String.valueOf(mp));
 
-        if(TT != null){
-            TT.cancel();
-            setTimer();
-        }
+        setTimer();
     }
 
     @Override

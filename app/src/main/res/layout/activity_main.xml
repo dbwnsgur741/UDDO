@@ -22,27 +22,33 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_navigator_"
-        app:menu="@menu/activity_navigator_drawer" />
+        app:menu="@menu/activity_navigator_drawer"
+        android:visibility="gone"/>
 
     <FrameLayout
+        android:background="@drawable/bg"
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
+            android:layout_marginTop="21dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="com.example.customlistview.MainActivity">
 
             <TextView
+                android:layout_gravity="center"
                 android:id="@+id/name_mission"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginBottom="16dp"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="18sp"
+                android:fontFamily="@font/seoulhangangcb"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@+id/listview1"
                 app:layout_constraintStart_toStartOf="@+id/listview1"
                 tools:ignore="MissingConstraints" />
@@ -55,8 +61,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/main"
-                android:divider="#ffffff"
+                android:divider="@drawable/bg"
                 android:dividerHeight="10dp" />
 
         </android.support.constraint.ConstraintLayout>
