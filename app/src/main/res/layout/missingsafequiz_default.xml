@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/default_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:elevation="5dp"
+        android:id="@+id/msq_default_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="#000000">
+
+        <TextView
+            android:id="@+id/msq_default_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/seoulhangangcb"
+            android:textSize="18sp"
+            android:text="Toolbar"/>
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <TextView
+        android:gravity="center"
+        android:fontFamily="@font/seoulhangangcb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="98dp"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:lineSpacingExtra="15dp"
+        android:text="누군가 고종황제의 처소에 불을 질러\n
+황제를 시해하려 했으나 다행히 황제는\n
+무사히 몸을 피했습니다.\n
+그러나 황제가 처소에 보관하던 비밀금고가\n
+사라졌습니다.\n
+이제 여러분들은 합심해서 비밀금고와\n
+금고의 비빌번호를 찾아 금고를 열어야 합니다.\n\n
+(황제의 비빌금고를 열고\n
+금고안의 독립자금을 획득하시오.)" />
+
+    <ImageButton
+        android:layout_marginTop="68dp"
+        android:id="@+id/msq_default_btn"
+        android:layout_width="324dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:background="@drawable/app_main_btn_4" />
+
+</LinearLayout>

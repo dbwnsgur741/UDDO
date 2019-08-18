@@ -21,7 +21,7 @@ import com.journeyapps.barcodescanner.BarcodeView;
 import java.util.Arrays;
 import java.util.List;
 
-public class QR_Code_Activity extends AppCompatActivity {
+public class QR_Code_Default_Sub_Activity extends AppCompatActivity {
 
     private Button scan_btn;
     private BarcodeView scanner_view;
@@ -33,9 +33,9 @@ public class QR_Code_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.qr_code_default);
+        setContentView(R.layout.qr_code_default_sub );
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.qr_code_default_sub_toolbar);
         setSupportActionBar(toolbar);
 
         scan_btn = (Button)findViewById(R.id.scanner_btn);
@@ -55,17 +55,16 @@ public class QR_Code_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(flag){
                     scanner_view.setVisibility( View.VISIBLE );
-                    scan_btn.setHint( "취소하기" );
                     flag = false;
                 }
                 else{
                     scanner_view.setVisibility( View.INVISIBLE );
-                    scan_btn.setHint( "해독하기" );
                     flag = true;
                 }
             }
         });
     }
+        //TODO : QR 코드 사진 기능 구현 완료 ... QR 코드 번호로 넘겨줄 경우 구현해야함
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,8 +86,8 @@ public class QR_Code_Activity extends AppCompatActivity {
                     intent.putExtra( "Quiz_Num",result.getText() );
                     scanner_view.setVisibility( View.INVISIBLE );
                     flag = true;
-                    scan_btn.setHint( "해독하기" );
-                    startActivityForResult( intent , 5000 );
+                    startActivity( intent );
+                    finish();
                 }
                 else if(Arrays.asList(point_array).contains( result.getText() )){
                     Log.d("@@@@@@@@", String.valueOf( result.getText() ) );

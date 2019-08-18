@@ -20,6 +20,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <activity
+            android:name=".MissingSafeQuiz_final_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".MissingSafeQuiz_Detail_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".MissingSafeQuiz_Default_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".A_Quiz_False_Acitivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -37,20 +51,27 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".QR_PointManager"
+            android:name=".QR_Code_False_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".QR_Code_Correct_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".QR_Code_Quiz_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-
+        <activity
+            android:name=".QR_Code_Default_Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".QR_Code_Detail_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".QR_Code_Activity"
+            android:name=".QR_Code_Default_Sub_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
     private Intent intent;
     private TextView textView;
     private EditText editText;
-    private Button btn_apply;
+    private ImageButton btn_apply;
     private static String[] qr_quiz_array;
     private static String[] qr_quiz_array_answer;
     private String qr_quiz_desc;
@@ -35,13 +36,14 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor ;
     private int code_check;
+    private ImageButton pass_btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.qr_code_detail );
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.qr_code_detail_toolbar_top);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.qr_code_detail_toolbar);
         setSupportActionBar(toolbar);
 
         sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
@@ -55,11 +57,13 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
         }
 
         intent = getIntent();
+
+        pass_btn = (ImageButton)findViewById( R.id.qr_code_detail_pass_btn );
         quiz_num = intent.getStringExtra( "Quiz_Num" );
         textView = (TextView)findViewById( R.id.qr_quiz_desc );
-        editText = (EditText)findViewById( R.id.edt_QuizText );
+        editText = (EditText)findViewById( R.id.qr_code_detail_editText );
 
-        btn_apply = (Button)findViewById( R.id.qr_code_detail_apply_btn );
+        btn_apply = (ImageButton)findViewById( R.id.qr_code_detail_apply_btn );
 
         if(qr_quiz_array == null){
             qr_quiz_array = getResources().getStringArray( R.array.qr_code_quiz );
@@ -73,6 +77,15 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
 
         textView.setText( qr_quiz_desc );
 
+        pass_btn.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent( getApplicationContext(), QR_Code_Default_Sub_Activity.class );
+                startActivity( intent );
+                finish();
+            }
+        } );
+
         btn_apply.setOnClickListener( new View.OnClickListener() {
             Intent intent = null;
             @Override
@@ -85,14 +98,12 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
                 else {
                     if(qr_quiz_answer.equals( user_answer )){
                         intent = new Intent( getApplicationContext(), QR_PointManager.class );
-                        intent.putExtra( "user_answer",user_answer );
-                        intent.putExtra("flag",true);
-                        startActivityForResult( intent, 20 );
+                        intent.putExtra( "code_index",code_index );
+                        startActivity( intent );
+                        finish();
                     }
                     else{
-                        intent = new Intent( getApplicationContext(), QR_PointManager.class );
-                        intent.putExtra( "user_answer", user_answer );
-                        intent.putExtra( "flag",false );
+                        intent = new Intent( getApplicationContext(), QR_Code_False_Activity.class );
                         startActivityForResult( intent, 30 );
                     }
 
@@ -115,7 +126,6 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
 
     public void setQr_quiz(String num) {
         code_index = Arrays.binarySearch(QR_CODE,num);
-        Log.d("!!!!!!!", String.valueOf( code_index ) );
         this.qr_quiz_desc = qr_quiz_array[code_index];
     }
 
@@ -131,21 +141,16 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
-            Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent1);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 20 ){
-            int qr_code_manager = (int) Math.pow( 2,code_index );
-            editor.putInt( "qr_code_manager",qr_code_manager+sharedPreferences.getInt( "qr_code_manager" ,0) );
-            editor.commit();
-            finish();
-        }
-        else if(resultCode == 30){
+
+        if(resultCode == 30){
             finish();
         }
     }

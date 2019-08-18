@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:elevation="5dp"
+        android:id="@+id/qr_code_default_sub_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="#000000">
+
+        <TextView
+            android:id="@+id/qr_code_default_sub_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/seoulhangangcb"
+            android:textSize="18sp"
+            android:text="암호해독기"/>
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <LinearLayout
+        android:layout_marginTop="32dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:background="@drawable/box_rectangle_stroke_light"
+            android:layout_width="324dp"
+            android:layout_height="263dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
+
+        <com.journeyapps.barcodescanner.BarcodeView
+            android:id="@+id/qr_scanner"
+            android:visibility="invisible"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/qr_code_default_sub_editText"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:background="@drawable/box_rectangle_stroke_light"
+            android:layout_width="324dp"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:hint="관리번호를 입력하세요."/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:background="@drawable/app_main_btn_7"
+            android:id="@+id/scanner_btn"
+            android:layout_marginTop="93dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+</LinearLayout>

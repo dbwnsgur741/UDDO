@@ -94,6 +94,8 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
             finish();
         }
         else {
+            editor.putInt("Quiz1", sharedPreferences.getInt("Quiz1",0)+1);
+            editor.commit();
             intent = new Intent( getApplicationContext(), A_Quiz_False_Acitivity.class );
             setTimer();
             startActivity( intent );

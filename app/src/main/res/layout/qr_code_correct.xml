@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bg">
+
+    <android.support.v7.widget.Toolbar
+        android:elevation="5dp"
+        android:id="@+id/qr_code_correct_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="#000000">
+
+        <TextView
+            android:id="@+id/qr_code_correct_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/seoulhangangcb"
+            android:textSize="18sp"
+            android:text="결과확인"/>
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <ImageButton
+        android:layout_marginTop="105dp"
+        android:layout_gravity="center"
+        android:background="@drawable/point_200"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_pointmanager"
+        android:layout_marginTop="69dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/seoulhangangcb"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:text='" 축하합니다! "'/>
+
+    <ImageButton
+        android:background="@drawable/app_main_btn_10"
+        android:id="@+id/qr_code_correct_go_other_quiz"
+        android:layout_marginTop="123dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+         />
+
+    <ImageButton
+        android:background="@drawable/app_main_btn_3"
+        android:id="@+id/qr_code_correct_go_main"
+        android:layout_marginTop="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+     />
+
+</LinearLayout>

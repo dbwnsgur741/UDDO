@@ -1,7 +1,6 @@
 package com.example.customlistview;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -14,17 +13,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,14 +29,11 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences sf;
     private String sf_txt;
     private int mp;
-
     private ListView listView;
     private ListViewAdapter adapter;
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
-    private int START_TIME_5_MIN ;
-    private Timer ntimer ;
-    private TimerTask TT ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,24 +73,29 @@ public class MainActivity extends AppCompatActivity
         adapter.addItem("일본군영( 4 )에서 아이템을 획득하라!","보물찾기");
         adapter.addItem("애국동지들과 추억쌓기","사진미션");
         adapter.addItem("대결 경쟁을 통해 참다운 의병이 되어라!","NPC");
-        adapter.addItem("QR미션","QR미션");
+        adapter.addItem("미션1","미션1");
+        adapter.addItem("미션2","미션2");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
                 switch (position) {
-                  case 0:
-                    intent = new Intent(getApplicationContext(), A_Quiz_Default_Activity.class);
-                    intent.putExtra("category", ((ListViewItem) adapter.getItem(position)).getTitle());
-                    startActivityForResult(intent, 2000);
+                    case 0:
+                        intent = new Intent(getApplicationContext(), A_Quiz_Default_Activity.class);
+                        intent.putExtra("category", ((ListViewItem) adapter.getItem(position)).getTitle());
+                        startActivityForResult(intent, 2000);
                     break;
+                    case 1:
+                        intent = new Intent( getApplicationContext(), MissingSafeQuiz_Default_Activity.class );
+                        startActivity( intent );
+                        break;
                     case 3:
                         intent = new Intent( getApplicationContext(), Picture_default_Activity.class );
                         startActivityForResult( intent,4000 );
                         break;
-                  case 5:
-                    intent = new Intent(getApplicationContext(), QR_Code_Activity.class);
+                  case 2:
+                    intent = new Intent(getApplicationContext(), QR_Code_Default_Activity.class);
                     intent.putExtra("category",((ListViewItem)adapter.getItem(position)).getTitle());
                     startActivityForResult(intent,3000);
                     break;
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    protected void setTimer(){
+    public void setTimer(){
 
         //TODO : 퀴즈풀기 텍스트 계속 세팅되어있음 --> 수정, 틀린문제 정답 세팅
 
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     long TIME_NOW = System.currentTimeMillis();
-                    int TIMER = 10;
+                    int TIMER = 10; // 시간(초) 로 입력
                     int temp = ((int) (TIME_NOW - EVENT_TIME)) / 1000;
                     int temp2 = TIMER - temp;
                     int min = temp2 / 60;
@@ -166,40 +165,7 @@ public class MainActivity extends AppCompatActivity
             };
             handler.post( runnableCode );
         }
-        // 타이머 레이아웃 초기화 및 타이머 초기화
-        /*
-        ntimer = new Timer();
-        timer = adapter.getTimerView();
 
-        TT = new TimerTask() {
-            @Override
-            public void run() {
-                long TIME_NOW = System.currentTimeMillis();
-                int TIMER = 300;
-                int temp = ((int)(TIME_NOW - EVENT_TIME))/1000;
-                int temp2 = TIMER - temp;
-
-                int min = temp2 / 60;
-                int sec = temp2 % 60;
-
-                if(String.valueOf(sec).length() == 1){
-                    timer.setText(String.format("0%d:0%d",min,sec));
-                }
-                else{
-                    timer.setText(String.format("0%d:%d",min,sec));
-                }
-                if(temp2 < 0){
-                    TT.cancel();
-                    timer.setText("퀴즈풀기!");
-                }
-            }
-        };
-        ntimer.schedule(TT,0,1000);
-        */
-    }
-
-    private void stopTimer(){
-        TT.cancel();
     }
 
     @Override
@@ -213,7 +179,6 @@ public class MainActivity extends AppCompatActivity
         TextView point = (TextView) findViewById(R.id.my_point_text);
         point.setText(String.valueOf(mp));
 
-        setTimer();
     }
 
     @Override
@@ -233,8 +198,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        stopTimer();
-        setTimer();
         return super.onOptionsItemSelected(item);
     }
 
