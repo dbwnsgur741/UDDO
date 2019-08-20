@@ -78,7 +78,7 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     long TIME_NOW = System.currentTimeMillis();
-                    int TIMER = 10;
+                    int TIMER = 1;
                     int temp = ((int) (TIME_NOW - time)) / 1000;
                     int temp2 = TIMER - temp;
                     int min = temp2 / 60;

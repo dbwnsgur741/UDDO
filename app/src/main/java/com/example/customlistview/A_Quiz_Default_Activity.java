@@ -30,6 +30,8 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     private TimerTask TimerTask ;
     private ImageButton ib;
     private static Boolean flag = true;
+    private static int sp_quiz_num ;
+    private TextView timer_textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +52,16 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
             }
         });
 
+
+
         // TODO : 툴바 텍스트 적용 및 레이아웃 정리 ( A_QUIZ)
         sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        sp_quiz_num = sharedPreferences.getInt( "Quiz1",0 );
+
         timer_check = sharedPreferences.getLong( "Timer",0 );
         setTimer_check( timer_check );
 
+        timer_textview = (TextView)findViewById( R.id.timer_textview );
         tmr = (TextView) findViewById(R.id.timer_layout);
 
         if(getSupportActionBar() != null){
@@ -63,6 +70,10 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        if(sp_quiz_num > 10){
+            timer_textview.setText( "모든 문제를 풀었습니다!" );
+            ib.setVisibility( View.INVISIBLE );
+        }
     }
     /*
     private void setTimer_check(final Long time){
@@ -108,7 +119,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
                 @Override
                 public void run() {
                     long TIME_NOW = System.currentTimeMillis();
-                    int TIMER = 10;
+                    int TIMER = 1;
                     int temp = ((int) (TIME_NOW - time)) / 1000;
                     int temp2 = TIMER - temp;
                     int min = temp2 / 60;
@@ -138,11 +149,12 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(TimerTask != null){
-            TimerTask.cancel();
+        if(sp_quiz_num < 10){
             setTimer_check( timer_check );
+        }else{
+            timer_textview.setText( "모든 문제를 풀었습니다!" );
+            ib.setVisibility( View.INVISIBLE );
         }
-
     }
 
     @Override

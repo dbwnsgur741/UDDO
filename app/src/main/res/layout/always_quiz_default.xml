@@ -34,6 +34,7 @@
         android:background="@drawable/toolbar_dropshadow" />
 
     <TextView
+        android:id="@+id/always_quiz_default_textView"
         android:gravity="center"
         android:fontFamily="@font/seoulhangangcb"
         android:layout_width="match_parent"

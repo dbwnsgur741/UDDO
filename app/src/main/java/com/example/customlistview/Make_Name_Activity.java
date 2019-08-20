@@ -29,6 +29,7 @@ public class Make_Name_Activity extends Activity {
         // 저장된 닉네임이 있는지 확인
         SharedPreferences save_nick_sf = getSharedPreferences("NamSan",MODE_PRIVATE);
         SharedPreferences.Editor editor = save_nick_sf.edit();
+        // TODO : SharePreferences 초기화 --> editor.clear() // 테스트 위하여 초기화 시켜놓음
         editor.clear();
         editor.commit();
 

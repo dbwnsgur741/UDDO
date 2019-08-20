@@ -97,7 +97,7 @@ public class QR_Code_Quiz_Activity extends AppCompatActivity {
                 }
                 else {
                     if(qr_quiz_answer.equals( user_answer )){
-                        intent = new Intent( getApplicationContext(), QR_PointManager.class );
+                        intent = new Intent( getApplicationContext(), QR_Code_Correct_Activity.class );
                         intent.putExtra( "code_index",code_index );
                         startActivity( intent );
                         finish();

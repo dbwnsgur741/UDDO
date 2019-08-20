@@ -1,6 +1,5 @@
 package com.example.customlistview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -20,9 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,7 +29,6 @@ public class MainActivity extends AppCompatActivity
     private ListViewAdapter adapter;
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     long TIME_NOW = System.currentTimeMillis();
-                    int TIMER = 10; // 시간(초) 로 입력
+                    int TIMER = 1; // 시간(초) 로 입력
                     int temp = ((int) (TIME_NOW - EVENT_TIME)) / 1000;
                     int temp2 = TIMER - temp;
                     int min = temp2 / 60;
@@ -178,7 +173,6 @@ public class MainActivity extends AppCompatActivity
         mp = sf.getInt("myPoint",0);
         TextView point = (TextView) findViewById(R.id.my_point_text);
         point.setText(String.valueOf(mp));
-
     }
 
     @Override
