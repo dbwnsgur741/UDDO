@@ -89,7 +89,6 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
             editor.putInt("myPoint",sharedPreferences.getInt("myPoint",0)+50);
             editor.commit();
             intent = new Intent( getApplicationContext(), A_Quiz_Correct_Acitivity.class );
-            setTimer();
             startActivity(intent);
             finish();
         }
@@ -97,17 +96,11 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
             editor.putInt("Quiz1", sharedPreferences.getInt("Quiz1",0)+1);
             editor.commit();
             intent = new Intent( getApplicationContext(), A_Quiz_False_Acitivity.class );
-            setTimer();
             startActivity( intent );
             finish();
         }
     }
 
-    public void setTimer(){
-        long eventTime =  System.currentTimeMillis();
-        editor.putLong( "Timer", eventTime );
-        editor.commit();
-    }
 
     @Override
     public void onClick(View v) {

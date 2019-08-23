@@ -32,18 +32,38 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     private static Boolean flag = true;
     private static int sp_quiz_num ;
     private TextView timer_textview;
+    private Long savedTime;
+    private Handler handler;
+    private final long currentTime = System.currentTimeMillis();
+    // long currentTime : should be set when class started or it can be changed at every call
+    private long maxTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.always_quiz_default);
 
+
+        /******* Layout Setting*******/
+        //// Tool bar Setting
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.always_quiz_toolbar_top);
         TextView toolbar_text = (TextView)findViewById( R.id.always_quiz_toolbar_text );
         toolbar_text.setText( "지피지기면 백전백승" );
         setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        //// End Of Tool bar Setting
 
+        timer_textview = (TextView)findViewById( R.id.timer_textview );
+        tmr = (TextView) findViewById(R.id.timer_layout);
         ib = (ImageButton) findViewById(R.id.next_step);
+        /******* End of Layout Setting*******/
+
+        /******* Event Setting *******/
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,108 +71,76 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
                 startActivityForResult(intent_detail,1000);
             }
         });
-
-
+        /******* End of event Setting *******/
 
         // TODO : 툴바 텍스트 적용 및 레이아웃 정리 ( A_QUIZ)
         sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
         sp_quiz_num = sharedPreferences.getInt( "Quiz1",0 );
 
-        timer_check = sharedPreferences.getLong( "Timer",0 );
-
-
-        setTimer_check( timer_check );
-
-        timer_textview = (TextView)findViewById( R.id.timer_textview );
-        tmr = (TextView) findViewById(R.id.timer_layout);
-
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        String timeValue = getResources().getString(R.string.timerValue);
+        if(timeValue!=null) {
+            maxTime = Long.parseLong(timeValue);
         }
-
-        if(sp_quiz_num > 10){
-            timer_textview.setText( "모든 문제를 풀었습니다!" );
-            ib.setVisibility( View.INVISIBLE );
-        }
+        handler = new Handler();
     }
-    /*
-    private void setTimer_check(final Long time){
-        if(time > 0 ){
-            ib.setVisibility( View.GONE );
-            ntimer = new Timer();
-            TimerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    long TIME_NOW = System.currentTimeMillis();
-                    int TIMER = 300;
-                    int temp = ((int)(TIME_NOW - time))/1000;
-                    int temp2 = TIMER - temp;
+    /*******
+     *        void setTiemr_check()
+     *        summary : set and start the timer if it's not started (right after quiz)
+     *         if it's started resume the timer and refresh the textview
+     *********/
+    private void setTimer_check() {
 
-                    int min = temp2 / 60;
-                    int sec = temp2 % 60;
+        savedTime = sharedPreferences.getLong("Timer", currentTime);
 
-                    if(String.valueOf(sec).length() == 1){
-                        tmr.setText(String.format("0%d:0%d",min,sec));
-                    }
-                    else{
-                        tmr.setText(String.format("0%d:%d",min,sec));
-                    }
-                    if(temp2 == 0){
-                        TimerTask.cancel();
-                        tmr.setText("퀴즈풀기!");
+        if (currentTime - savedTime  > maxTime){ // over 5 mins
+            overTimeSetting();
+            return;
+        }
+
+        if (currentTime == savedTime){ // first access
+            overTimeSetting();
+            return;
+        }
+
+        final Runnable runnableCode = new Runnable() {
+            @Override
+            public void run() { //remain some time
+                remainTimeSetting();
+                long TIME_NOW = System.currentTimeMillis();
+                int timeGab = ((int) (TIME_NOW - savedTime)) / 1000;
+                int remainTimeSec = (int)( maxTime/1000) - timeGab;
+                int min = remainTimeSec / 60;
+                int sec = remainTimeSec % 60;
+
+                if (currentTime - savedTime  > maxTime){ // over 5 mins
+                    overTimeSetting();
+                } else {
+                    if (String.valueOf( sec ).length() == 1) {
+                        tmr.setText( String.format( "0%d:0%d", min, sec ) );
+                    } else {
+                        tmr.setText( String.format( "0%d:%d", min, sec ) );
                     }
                 }
-            };
-            ntimer.schedule(TimerTask,0,1000);
-        }
-        else{
-            ib.setVisibility( View.VISIBLE );
-        }
+                handler.postDelayed( this, 1000 );
+            }
+        };
+        handler.post( runnableCode );
     }
-    */
+    private void overTimeSetting(){
+        tmr.setText( "퀴즈풀기!" );
+        ib.setVisibility( View.VISIBLE );
+        handler.removeCallbacksAndMessages(null);
 
-    private void setTimer_check(final Long time) {
-        final Handler handler = new Handler();
-        if (time > 0) {
-            ib.setVisibility( View.GONE );
-            final Runnable runnableCode = new Runnable() {
-                @Override
-                public void run() {
-                    long TIME_NOW = System.currentTimeMillis();
-                    int TIMER = 1;
-                    int temp = ((int) (TIME_NOW - time)) / 1000;
-                    int temp2 = TIMER - temp;
-                    int min = temp2 / 60;
-                    int sec = temp2 % 60;
-
-                    if (temp2 < 0) {
-                        tmr.setText( "퀴즈풀기!" );
-                        ib.setVisibility( View.VISIBLE );
-                        handler.removeCallbacks( this );
-                    }
-                    else {
-                        if (String.valueOf( sec ).length() == 1) {
-                            tmr.setText( String.format( "0%d:0%d", min, sec ) );
-                        } else {
-                            tmr.setText( String.format( "0%d:%d", min, sec ) );
-                        }
-                    }
-                    handler.postDelayed( this, 1000 );
-                }
-            };
-            handler.post( runnableCode );
-        } else {
-            ib.setVisibility( View.VISIBLE );
-        }
+    }
+    private void remainTimeSetting(){
+        ib.setVisibility( View.GONE );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if(sp_quiz_num < 10){
-            setTimer_check( timer_check );
+            setTimer_check();
         }else{
             timer_textview.setText( "모든 문제를 풀었습니다!" );
             ib.setVisibility( View.INVISIBLE );
