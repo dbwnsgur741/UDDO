@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,6 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SharedPreferences sf;
     private String sf_txt;
     private int mp;
     private ListView listView;
@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity
 
         // <!--SharedPreferences --!>
 
-        sf = getSharedPreferences("NamSan",MODE_PRIVATE);
-        sf_txt = sf.getString("NickName","");
-        mp = sf.getInt("myPoint",0);
+        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        sf_txt = sharedPreferences.getString("NickName","");
+        mp = sharedPreferences.getInt("myPoint",0);
 
         TextView name_mission = (TextView)findViewById(R.id.name_mission);
         name_mission.setText(sf_txt + "님의 지령지");
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         timer = adapter.getTimerView();
         final Handler handler = new Handler(  );
         final long EVENT_TIME = sharedPreferences.getLong( "Timer",0 );
-
+        Log.v("!!!!!!!!!!!!!!!!",Long.toString(EVENT_TIME));
         if(EVENT_TIME > 0){
             final Runnable runnableCode = new Runnable() {
                 @Override
@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity
 
         // <!-- 다시돌아왔을때 포인트 변화 부분 --!> //
 
-        sf = getSharedPreferences("NamSan",MODE_PRIVATE);
-        mp = sf.getInt("myPoint",0);
+        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
+        mp = sharedPreferences.getInt("myPoint",0);
         TextView point = (TextView) findViewById(R.id.my_point_text);
         point.setText(String.valueOf(mp));
     }

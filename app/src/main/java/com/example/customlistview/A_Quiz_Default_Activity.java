@@ -59,6 +59,8 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
         sp_quiz_num = sharedPreferences.getInt( "Quiz1",0 );
 
         timer_check = sharedPreferences.getLong( "Timer",0 );
+
+
         setTimer_check( timer_check );
 
         timer_textview = (TextView)findViewById( R.id.timer_textview );
