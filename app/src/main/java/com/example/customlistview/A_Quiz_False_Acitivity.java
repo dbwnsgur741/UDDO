@@ -120,7 +120,7 @@ public class A_Quiz_False_Acitivity extends AppCompatActivity {
                 int min = remainTimeSec / 60;
                 int sec = remainTimeSec % 60;
 
-                if (currentTime - savedTime  > maxTime){ // over 5 mins
+                if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     timer_text.setText( "퀴즈풀기!" );
                     handler.removeCallbacksAndMessages(null);
                 } else {

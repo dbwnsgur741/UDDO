@@ -3,6 +3,7 @@ package com.example.customlistview;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,6 @@ public class ListViewAdapter extends BaseAdapter {
             handler.removeCallbacksAndMessages(null);
             return;
         }
-
         final Runnable runnableCode = new Runnable() {
             @Override
             public void run() {
@@ -123,8 +123,8 @@ public class ListViewAdapter extends BaseAdapter {
                 int remainTimeSec = (int)( maxTime/1000) - timeGab;
                 int min = remainTimeSec / 60;
                 int sec = remainTimeSec % 60;
-
-                if (currentTime - savedTime  > maxTime){ // over 5 mins
+                Log.e("!!!!!!!!!!",(TIME_NOW-savedTime) + " "+ maxTime );
+                if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     timer.setText("퀴즈풀기!");
                     handler.removeCallbacksAndMessages(null);
                 } else {
