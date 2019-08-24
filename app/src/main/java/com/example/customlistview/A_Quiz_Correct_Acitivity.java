@@ -105,6 +105,8 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
         if (currentTime - savedTime  > maxTime){ // over 5 mins
             timer_text.setText( "퀴즈풀기!" );
             handler.removeCallbacksAndMessages(null);
+            sharedPreferences.edit().remove("Timer").apply();
+
             return;
         }
 
@@ -124,6 +126,7 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
                 if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     timer_text.setText( "퀴즈풀기!" );
                     handler.removeCallbacksAndMessages(null);
+                    sharedPreferences.edit().remove("Timer").apply();
                 } else {
                     if (String.valueOf( sec ).length() == 1) {
                         timer_text.setText( String.format( "0%d:0%d", min, sec ) );

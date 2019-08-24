@@ -107,6 +107,7 @@ public class ListViewAdapter extends BaseAdapter {
         if (currentTime - savedTime  > maxTime){ // over 5 mins
             timer.setText("퀴즈풀기!");
             handler.removeCallbacksAndMessages(null);
+            sharedPreferences.edit().remove("Timer").apply();
             return;
         }
 
@@ -123,10 +124,10 @@ public class ListViewAdapter extends BaseAdapter {
                 int remainTimeSec = (int)( maxTime/1000) - timeGab;
                 int min = remainTimeSec / 60;
                 int sec = remainTimeSec % 60;
-                Log.e("!!!!!!!!!!",(TIME_NOW-savedTime) + " "+ maxTime );
                 if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     timer.setText("퀴즈풀기!");
                     handler.removeCallbacksAndMessages(null);
+                    sharedPreferences.edit().remove("Timer").apply();
                 } else {
                     if (String.valueOf( sec ).length() == 1) {
                         timer.setText( String.format( "0%d:0%d", min, sec ) );

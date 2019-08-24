@@ -130,7 +130,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
         tmr.setText( "퀴즈풀기!" );
         ib.setVisibility( View.VISIBLE );
         handler.removeCallbacksAndMessages(null);
-
+        sharedPreferences.edit().remove("Timer").apply();
     }
     private void remainTimeSetting(){
         ib.setVisibility( View.GONE );
