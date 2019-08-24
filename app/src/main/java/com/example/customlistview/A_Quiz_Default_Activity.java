@@ -112,7 +112,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
                 int min = remainTimeSec / 60;
                 int sec = remainTimeSec % 60;
 
-                if (currentTime - savedTime  > maxTime){ // over 5 mins
+                if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     overTimeSetting();
                 } else {
                     if (String.valueOf( sec ).length() == 1) {

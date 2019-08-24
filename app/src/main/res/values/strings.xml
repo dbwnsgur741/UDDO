@@ -24,5 +24,5 @@
     <string name="always_quiz_num_1">서울천년타임캡슐광에는 타임캡슐이\n묻혀있다. 타임캡슐의 매설일자는\n1994년 11월 29일이다. 그렇다면\n개봉일자는 2394년 11월 29일이다.</string>
 
     <!--  system values -->
-    <string name="timerValue">300000</string>
+    <string name="timerValue">3000</string>
 </resources>
