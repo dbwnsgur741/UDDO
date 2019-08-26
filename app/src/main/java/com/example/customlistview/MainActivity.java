@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     private TextView timer;
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
-
+    public TextView point;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity
 
         View include01 = findViewById(R.id.include1);
         View include02 = include01.findViewById(R.id.include2);
-        TextView point = (TextView) findViewById(R.id.my_point_text);
+        point = (TextView) findViewById(R.id.my_point_text);
 
         // <!--SharedPreferences --!>
 
@@ -61,13 +62,13 @@ public class MainActivity extends AppCompatActivity
         this.adapter = new ListViewAdapter();
 
         listView = (ListView) findViewById(R.id.listview1);
-        adapter.addItem("지피지기면 백전백승","퀴즈1이 진행중입니다.");
+        adapter.addItem("지피지기면 백전백승","5분마다 제공되는 퀴즈를 풀자.");
         adapter.addItem("사라진 고종황제의 비밀금고를 열어라!","퀴즈 풀고 금고의 비밀번호를 받자!");
-        adapter.addItem("일본군영( 4 )에서 아이템을 획득하라!","보물찾기");
-        adapter.addItem("애국동지들과 추억쌓기","사진미션");
-        adapter.addItem("대결 경쟁을 통해 참다운 의병이 되어라!","NPC");
-        adapter.addItem("미션1","미션1");
-        adapter.addItem("미션2","미션2");
+        adapter.addItem("일본군영( 4 )에서 아이템을 획득하라!","지도의 위치에서 보물을 찾아보자");
+        adapter.addItem("애국동지들과 추억쌓기","사진미션을 통해 추억을 쌓자");
+        adapter.addItem("대결 경쟁을 통해 참다운 의병이 되어라!","NPC에게 미션을 받아보자");
+        adapter.addItem("상대와의 대결을 통해 군자금을 확보하라!","다른 팀과의 대결을 진행해보자");
+        //adapter.addItem("미션2","미션2");
         listView.setAdapter(adapter);
         timer = adapter.getTimerView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,15 +85,23 @@ public class MainActivity extends AppCompatActivity
                         intent = new Intent( getApplicationContext(), MissingSafeQuiz_Default_Activity.class );
                         startActivity( intent );
                         break;
+                    case 2:
+                        intent = new Intent(getApplicationContext(), QR_Code_Default_Activity.class);
+                        intent.putExtra("category",((ListViewItem)adapter.getItem(position)).getTitle());
+                        startActivityForResult(intent,3000);
+                        break;
                     case 3:
                         intent = new Intent( getApplicationContext(), Picture_default_Activity.class );
                         startActivityForResult( intent,4000 );
                         break;
-                  case 2:
-                    intent = new Intent(getApplicationContext(), QR_Code_Default_Activity.class);
-                    intent.putExtra("category",((ListViewItem)adapter.getItem(position)).getTitle());
-                    startActivityForResult(intent,3000);
-                    break;
+                    case 4:
+                        intent = new Intent( getApplicationContext(), TrainMissionActivity.class );
+                        startActivityForResult( intent,5000 );
+                        break;
+                    case 5:
+                        intent = new Intent( getApplicationContext(), VsActivity.class );
+                        startActivityForResult( intent,6000 );
+                        break;
                 }
             }
         });
