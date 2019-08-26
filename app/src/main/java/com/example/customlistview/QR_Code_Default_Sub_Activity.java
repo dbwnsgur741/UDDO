@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -26,40 +29,81 @@ public class QR_Code_Default_Sub_Activity extends AppCompatActivity {
     private String[] point_array = {"985911","967903","910204","995605","971206","952607","974508","988501"};
     public boolean flag = true;
     private SharedPreferences sharedPreferences;
+    private RelativeLayout relativeLayout;
+    private TextView textView;
+    private EditText editText;
+    private Intent intent ;
+    private String result;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_code_default_sub );
 
+        /******* Layout setting *******/
+        /// Toolbar setting ////
         Toolbar toolbar = (Toolbar) findViewById(R.id.qr_code_default_sub_toolbar);
         setSupportActionBar(toolbar);
-
-        scan_btn = (Button)findViewById(R.id.scanner_btn);
-        scanner_view = (BarcodeView) findViewById(R.id.qr_scanner);
-        scanner_view.decodeContinuous( callback );
-
-        sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        /// End Of Toolbar setting ////
+        textView = (TextView)findViewById( R.id.qr_set_scanner_textview );
+        scan_btn = (Button)findViewById(R.id.scanner_btn);
+        scanner_view = (BarcodeView) findViewById(R.id.qr_scanner);
+        relativeLayout = (RelativeLayout)findViewById( R.id.qr_set_scanner_layout );
+        editText = (EditText)findViewById( R.id.qr_code_default_sub_editText );
+
+        /******* Layout setting *******/
+
+        sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
+
+        /******* EVENT setting *******/
+
+        scanner_view.decodeContinuous( callback );
+
+        relativeLayout.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag){
+                    textView.setVisibility( View.GONE );
+                    scanner_view.setVisibility( View.VISIBLE );
+                    flag = false;
+                }else{
+                    scanner_view.setVisibility( View.INVISIBLE );
+                    textView.setVisibility( View.VISIBLE );
+                    flag = true;
+                }
+            }
+        } );
 
         scan_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag){
-                    scanner_view.setVisibility( View.VISIBLE );
-                    flag = false;
-                }
-                else{
-                    scanner_view.setVisibility( View.INVISIBLE );
-                    flag = true;
+                result = editText.getText().toString();
+                if(checkArray(result)){
+                    if(Arrays.asList(QR_CODE).contains(result)){
+                        intent = new Intent(getApplicationContext(),QR_Code_Quiz_Activity.class);
+                        intent.putExtra( "Quiz_Num",result );
+                        scanner_view.setVisibility( View.INVISIBLE );
+                        flag = true;
+                        startActivity( intent );
+                        finish();
+                    }else{
+                        Log.d("!!!!!!!!!!!!!!!!!!!!!",result);
+                        Toast.makeText(getApplicationContext(),"잘못된 관리번호입니다.",Toast.LENGTH_LONG).show();
+                    }
+
+                } else{
+                    Toast.makeText(getApplicationContext(),"이미 푼 문제입니다!\n다른 QR코드를 찾아주세요!",Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
         });
+        /******* End Of EVENT setting *******/
     }
         //TODO : QR 코드 사진 기능 구현 완료 ... QR 코드 번호로 넘겨줄 경우 구현해야함
 
@@ -72,7 +116,6 @@ public class QR_Code_Default_Sub_Activity extends AppCompatActivity {
     }
 
     private BarcodeCallback callback = new BarcodeCallback() {
-        Intent intent ;
         @Override
         public void barcodeResult(BarcodeResult result) {
 

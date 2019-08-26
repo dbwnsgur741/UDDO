@@ -44,11 +44,20 @@
         tools:ignore="MissingConstraints">
 
         <RelativeLayout
+            android:id="@+id/qr_set_scanner_layout"
             android:background="@drawable/box_rectangle_stroke_light"
             android:layout_width="324dp"
             android:layout_height="263dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/qr_set_scanner_textview"
+                android:fontFamily="@font/seoulhangangcb"
+                android:gravity="center"
+                android:text="눌러서\nQR 인식하기"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         <com.journeyapps.barcodescanner.BarcodeView
             android:id="@+id/qr_scanner"

@@ -5,18 +5,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 public class QR_Code_Default_Activity extends AppCompatActivity {
 
-    ImageButton imageButton;
+    private ImageButton imageButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.qr_code_default_main );
 
+        /******* Layout setting *******/
+        //// Toolbar Setting ////
         Toolbar toolbar = (Toolbar) findViewById(R.id.qr_code_default_toolbar);
         setSupportActionBar(toolbar);
 
@@ -26,7 +29,14 @@ public class QR_Code_Default_Activity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        /// End Of Toolbar Setting ////
+
         imageButton = (ImageButton)findViewById( R.id.qr_code_default_btn );
+
+        /******* Layout setting *******/
+
+        /******* EVENT setting *******/
+
         imageButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +45,15 @@ public class QR_Code_Default_Activity extends AppCompatActivity {
                 finish();
             }
         } );
+
+        /******* End Of EVENT setting *******/
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
