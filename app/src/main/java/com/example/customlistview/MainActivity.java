@@ -31,37 +31,54 @@ public class MainActivity extends AppCompatActivity
     public SharedPreferences sharedPreferences;
     public SharedPreferences.Editor editor;
     public TextView point;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /******* Layout Setting*******/
+
+        //// SharedPreferences
+
         sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        sf_txt = sharedPreferences.getString("NickName","");
+        mp = sharedPreferences.getInt("myPoint",0);
 
-        //툴바 초기화
+        //// End Of SharedPreferences
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         View include01 = findViewById(R.id.include1);
         View include02 = include01.findViewById(R.id.include2);
         point = (TextView) findViewById(R.id.my_point_text);
-
-        // <!--SharedPreferences --!>
-
-        sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
-        sf_txt = sharedPreferences.getString("NickName","");
-        mp = sharedPreferences.getInt("myPoint",0);
-
         TextView name_mission = (TextView)findViewById(R.id.name_mission);
         name_mission.setText(sf_txt + "님의 지령지");
         point.setText(String.valueOf(mp));
+        listView = (ListView) findViewById(R.id.listview1);
 
-        //  <!--리스트 뷰 및 아이템 초기화 --!>
+        //// Top Navigation Bar
+
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //// End Of Top Navigation Bar
+
+        /******* End Of Layout Setting*******/
+
+
+        /******* ListView Layout & Event Setting *******/
 
         this.adapter = new ListViewAdapter();
 
-        listView = (ListView) findViewById(R.id.listview1);
         adapter.addItem("지피지기면 백전백승","5분마다 제공되는 퀴즈를 풀자.");
         adapter.addItem("사라진 고종황제의 비밀금고를 열어라!","퀴즈 풀고 금고의 비밀번호를 받자!");
         adapter.addItem("일본군영( 4 )에서 아이템을 획득하라!","지도의 위치에서 보물을 찾아보자");
@@ -71,6 +88,7 @@ public class MainActivity extends AppCompatActivity
         //adapter.addItem("미션2","미션2");
         listView.setAdapter(adapter);
         timer = adapter.getTimerView();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -105,21 +123,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        // <!--리스트 뷰 및 아이템 초기화 끝 --!>
 
-        //<!-- 상단 네비게이션 바 초기화 --!>
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //<!-- 네비게이션 바 초기화 끝 --!>
-
-
+        /******* End Of ListView Layout & Event Setting *******/
     }
 
     @Override

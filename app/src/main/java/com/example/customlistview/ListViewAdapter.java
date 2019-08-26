@@ -22,13 +22,14 @@ public class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
     public TextView timerTextView;
     public LinearLayout linearLayout;
-
+    private TextView titleTextView;
     public SharedPreferences sharedPreferences;
     private Long savedTime;
     private Handler handler;
     private final long currentTime = System.currentTimeMillis();
     // long currentTime : should be set when class started or it can be changed at every call
     private long maxTime;
+
     public ListViewAdapter(){
         super();
         handler = new Handler();
@@ -69,14 +70,29 @@ public class ListViewAdapter extends BaseAdapter {
             }
             timerTextView = (TextView) convertView.findViewById(R.id.timer);
             timerTextView.setVisibility(View.VISIBLE);
+            linearLayout = (LinearLayout)convertView.findViewById( R.id.listview_title_layout );
+            linearLayout.setVisibility( View.VISIBLE );
+            titleTextView = (TextView)convertView.findViewById( R.id.listview_title_text );
+            titleTextView.setText( "퀴즈 미션" );
             setTimer_check();
+        }
+        else if(position == 3){
+            linearLayout = (LinearLayout)convertView.findViewById( R.id.listview_title_layout );
+            linearLayout.setVisibility( View.VISIBLE );
+            titleTextView = (TextView)convertView.findViewById( R.id.listview_title_text );
+            titleTextView.setText( "사진 미션" );
+        }
+        else if(position == 4){
+            linearLayout = (LinearLayout)convertView.findViewById( R.id.listview_title_layout );
+            linearLayout.setVisibility( View.VISIBLE );
+            titleTextView = (TextView)convertView.findViewById( R.id.listview_title_text );
+            titleTextView.setText( "NPC 퀘스트" );
         }
 
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1);
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2);
 
         ListViewItem listViewItem = listViewItemList.get(position);
-
 
         titleTextView.setText(listViewItem.getTitle());
         descTextView.setText(listViewItem.getDescStr());
