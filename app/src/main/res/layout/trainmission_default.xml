@@ -58,6 +58,6 @@
         android:layout_width="324dp"
         android:layout_height="54dp"
         android:layout_gravity="center"
-        android:background="@drawable/app_main_btn_4" />
+        android:background="@drawable/map_btn" />
 
 </LinearLayout>

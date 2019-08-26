@@ -18,7 +18,7 @@ import java.io.File;
 public class ImageAdapter extends BaseAdapter  {
     private Context mContext;
     private Integer tt;
-    private static Bitmap[] mThumbIds = new Bitmap[12];
+    private static Bitmap[] mThumbIds = new Bitmap[10];
     private ImageView imageView;
     private Matrix matrix;
 
@@ -64,7 +64,8 @@ public class ImageAdapter extends BaseAdapter  {
                 matrix = new Matrix(  );
                 matrix.postRotate( 90 );
                 Bitmap bitmap1 = (Bitmap)BitmapFactory.decodeFile( String.valueOf( list[i] ),options );
-                bitmap1 = Bitmap.createBitmap( bitmap1,0,0,bitmap1.getWidth(),bitmap1.getHeight(),matrix,true );
+                int size = bitmap1.getWidth()>bitmap1.getHeight() ? bitmap1.getHeight() : bitmap1.getWidth();
+                bitmap1 = Bitmap.createBitmap( bitmap1,0,0,size,size,matrix,true );
                 mThumbIds[aa] = bitmap1;
             }
         }
@@ -97,10 +98,13 @@ public class ImageAdapter extends BaseAdapter  {
         imageView = new ImageView( mContext );
         if(mThumbIds[position] != null){
             imageView.setImageBitmap( mThumbIds[position] );
+        } else {
+            imageView.setImageResource(R.drawable.noimage);
+
         }
-        imageView.setBackgroundColor( Color.DKGRAY );
-        imageView.setScaleType( ImageView.ScaleType.CENTER_CROP );
-        imageView.setLayoutParams( new GridView.LayoutParams(300,300) );
+        imageView.setScaleType( ImageView.ScaleType.FIT_XY );
+        imageView.setAdjustViewBounds(true);
+        imageView.setLayoutParams( new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT) );
         return imageView;
     }
 }

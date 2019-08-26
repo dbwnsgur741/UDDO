@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CustomListView</string>
+    <string name="app_name">남산골선샤인</string>
     <string name="main_title">남산골선샤인</string>
     <string name="title_activity_sliding">SlidingActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
