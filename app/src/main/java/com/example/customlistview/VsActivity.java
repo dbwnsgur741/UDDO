@@ -21,7 +21,7 @@ public class VsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.msq_default_toolbar);
         TextView toolbar_text = (TextView) findViewById( R.id.msq_default_toolbar_text );
-        toolbar_text.setText( "대결 경쟁을 통해\n참다운 의병이 되어라!" );
+        toolbar_text.setText( "상대와의 대결을 통해\n군자금을 확보하라!" );
         setSupportActionBar(toolbar);
         imageButton = (ImageButton)findViewById( R.id.msq_default_btn );
 
