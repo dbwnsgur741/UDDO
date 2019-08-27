@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Environment;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -95,6 +97,29 @@ public class ImageAdapter extends BaseAdapter  {
     @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        View gridViewAndroid = null;
+        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
+        if(convertView == null){
+            gridViewAndroid = new View(mContext);
+            gridViewAndroid = layoutInflater.inflate( R.layout.gridview_below_imageview,null );
+            if(mThumbIds[position] != null){
+                ImageView imageView1 = (ImageView)gridViewAndroid.findViewById( R.id.android_gridview_image );
+                ImageView imageView2 = (ImageView)gridViewAndroid.findViewById( R.id.gridview_image2 );
+                imageView1.setImageBitmap( mThumbIds[position] );
+                imageView2.setImageResource( R.drawable.unclear );
+            }else{
+                ImageView imageView1 = (ImageView)gridViewAndroid.findViewById( R.id.android_gridview_image );
+                ImageView imageView2 = (ImageView)gridViewAndroid.findViewById( R.id.gridview_image2 );
+                imageView1.setImageResource( R.drawable.noimage );
+                imageView2.setImageResource( R.drawable.clear );
+            }
+        }else{
+            gridViewAndroid = (View)convertView;
+        }
+
+        return gridViewAndroid;
+        /*
         imageView = new ImageView( mContext );
         if(mThumbIds[position] != null){
             imageView.setImageBitmap( mThumbIds[position] );
@@ -106,5 +131,6 @@ public class ImageAdapter extends BaseAdapter  {
         imageView.setAdjustViewBounds(true);
         imageView.setLayoutParams( new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT) );
         return imageView;
+        */
     }
 }
