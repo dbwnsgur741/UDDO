@@ -107,12 +107,12 @@ public class ImageAdapter extends BaseAdapter  {
                 ImageView imageView1 = (ImageView)gridViewAndroid.findViewById( R.id.android_gridview_image );
                 ImageView imageView2 = (ImageView)gridViewAndroid.findViewById( R.id.gridview_image2 );
                 imageView1.setImageBitmap( mThumbIds[position] );
-                imageView2.setImageResource( R.drawable.unclear );
+                imageView2.setImageResource( R.drawable.clear );
             }else{
                 ImageView imageView1 = (ImageView)gridViewAndroid.findViewById( R.id.android_gridview_image );
                 ImageView imageView2 = (ImageView)gridViewAndroid.findViewById( R.id.gridview_image2 );
                 imageView1.setImageResource( R.drawable.noimage );
-                imageView2.setImageResource( R.drawable.clear );
+                imageView2.setImageResource( R.drawable.unclear );
             }
         }else{
             gridViewAndroid = (View)convertView;
