@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity
     public TextView point;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private String admin_status;
+    private TextView admin_textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         editor = sharedPreferences.edit();
         sf_txt = sharedPreferences.getString("NickName","");
         mp = sharedPreferences.getInt("myPoint",0);
-
+        admin_status = sharedPreferences.getString( "Admin","" );
         //// End Of SharedPreferences
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         name_mission.setText(sf_txt + "님의 지령지");
         point.setText(String.valueOf(mp));
         listView = (ListView) findViewById(R.id.listview1);
+        admin_textView = (TextView)findViewById( R.id.main_admin_textview );
 
         //// Top Navigation Bar
 
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
 
         //// End Of Top Navigation Bar
@@ -76,6 +84,8 @@ public class MainActivity extends AppCompatActivity
 
 
         /******* ListView Layout & Event Setting *******/
+        //check admin status
+        checkAdminLogin();
 
         this.adapter = new ListViewAdapter();
 
@@ -140,6 +150,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        // check admin status
+        checkAdminLogin();
+
         // <!-- 다시돌아왔을때 포인트 변화 부분 --!> //
         sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
         mp = sharedPreferences.getInt("myPoint",0);
@@ -180,11 +193,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Intent intent = null;
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            intent = new Intent( getApplicationContext(),Admin_Login_Activity.class );
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -193,8 +207,34 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+        /**** if use fragment
+         *
+        if(fragment !=null){
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content,fragment);
+            fragmentTransaction.commit();
+        }
+         ******/
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.d("afdfasfa","dsafsafds");
+        return super.onTouchEvent( event );
+    }
+
+    private void checkAdminLogin(){
+        this.admin_status = sharedPreferences.getString( "Admin","" );
+
+        if(admin_status == ""){
+            admin_textView.setVisibility( View.GONE );
+        }else{
+            admin_textView.setVisibility( View.VISIBLE );
+        }
     }
 }

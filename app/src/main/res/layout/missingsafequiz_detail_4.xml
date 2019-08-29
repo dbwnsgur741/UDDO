@@ -67,7 +67,7 @@
         android:textSize="15sp"
         android:textColor="#000000"
         android:lineSpacingExtra="15dp"
-        android:text="(황제의 비밀금고 세번째 비밀번호입니다.\n꼭 기억하세요.)" />
+        android:text="(황제의 비밀금고 네번째 비밀번호입니다.\n꼭 기억하세요.)" />
 
     <ImageButton
         android:id="@+id/msq_detail_btn"
