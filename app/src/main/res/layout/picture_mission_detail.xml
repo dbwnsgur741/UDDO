@@ -71,4 +71,64 @@
         android:textSize="24dp"
         tools:ignore="MissingConstraints"/>
 
+    <LinearLayout
+        android:id="@+id/point_layout"
+        android:layout_marginTop="600dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="12">
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/point_30"
+            android:background="@drawable/box_rectangle_stroke_light"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="30Point"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/seoulhangangcb"
+            android:layout_weight="3"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/point_50"
+            android:background="@drawable/box_rectangle_stroke_light"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="50Point"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/seoulhangangcb"
+            android:layout_weight="3"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/point_100"
+            android:background="@drawable/box_rectangle_stroke_light"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="100Point"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/seoulhangangcb"
+            android:layout_weight="3"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/point_150"
+            android:background="@drawable/box_rectangle_stroke_light"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="150Point"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/seoulhangangcb"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/picture_mission_detail_complete_mission_TextView"
+        android:layout_marginTop="500dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="#ff0000"
+        android:fontFamily="@font/seoulhangangcb"
+        android:text="이미 완료한 임무입니다."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
 </RelativeLayout>

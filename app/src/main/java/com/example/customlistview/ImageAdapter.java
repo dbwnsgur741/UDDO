@@ -2,6 +2,7 @@ package com.example.customlistview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -16,6 +17,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import java.io.File;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class ImageAdapter extends BaseAdapter  {
     private Context mContext;
@@ -23,6 +26,7 @@ public class ImageAdapter extends BaseAdapter  {
     private static Bitmap[] mThumbIds = new Bitmap[10];
     private ImageView imageView;
     private Matrix matrix;
+    private SharedPreferences sharedPreferences;
 
     public void getThum(){
         getget();
@@ -76,7 +80,9 @@ public class ImageAdapter extends BaseAdapter  {
 
     public ImageAdapter(Context c){
         mContext = c;
+        sharedPreferences = mContext.getSharedPreferences("NamSan",MODE_PRIVATE);
         getget();
+
     }
 
     @Override
@@ -103,11 +109,18 @@ public class ImageAdapter extends BaseAdapter  {
         if(convertView == null){
             gridViewAndroid = new View(mContext);
             gridViewAndroid = layoutInflater.inflate( R.layout.gridview_below_imageview,null );
+            int temp = (int) Math.pow( 2,position );
+            int temp2 = sharedPreferences.getInt( "picture_mission_manager",0 );
+            byte a = (byte)(temp & temp2);
             if(mThumbIds[position] != null){
                 ImageView imageView1 = (ImageView)gridViewAndroid.findViewById( R.id.android_gridview_image );
                 ImageView imageView2 = (ImageView)gridViewAndroid.findViewById( R.id.gridview_image2 );
                 imageView1.setImageBitmap( mThumbIds[position] );
-                imageView2.setImageResource( R.drawable.clear );
+                if(a!=0){
+                    imageView2.setImageResource( R.drawable.clear );
+                }else{
+                    imageView2.setImageResource( R.drawable.unclear );
+                }
             }else{
                 ImageView imageView1 = (ImageView)gridViewAndroid.findViewById( R.id.android_gridview_image );
                 ImageView imageView2 = (ImageView)gridViewAndroid.findViewById( R.id.gridview_image2 );

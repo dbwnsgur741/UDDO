@@ -42,14 +42,14 @@ public class Make_Name_Activity extends Activity {
         /******* End Of Layout setting *******/
 
         /******* Event Setting *******/
+
         // TODO : SharePreferences 초기화 --> editor.clear() --> 테스트 위하여 초기화 시켜놓음
 
         save_nick_sf = getSharedPreferences("NamSan",MODE_PRIVATE);
         editor = save_nick_sf.edit();
-        /*
         editor.clear();
         editor.commit();
-        */
+
         ///// 저장된 닉네임이 있는지 확인
         if(save_nick_sf.getString("NickName","") != ""){
             Intent intent1 = new Intent(this, MainActivity.class);

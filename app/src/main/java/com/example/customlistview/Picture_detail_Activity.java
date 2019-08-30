@@ -3,6 +3,7 @@ package com.example.customlistview;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,10 +24,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 public class Picture_detail_Activity extends AppCompatActivity {
@@ -42,14 +45,52 @@ public class Picture_detail_Activity extends AppCompatActivity {
     private String photoUri;
     private final int REQUEST_TAKE_PHOTO = 2;
     private Matrix matrix;
+    private LinearLayout point_layout;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String admin_status;
+    private static Boolean point_flag = true;
+    private AppCompatButton btn30;
+    private AppCompatButton btn50;
+    private AppCompatButton btn100;
+    private AppCompatButton btn150;
+    private static int[] picture_mission;
+    private TextView complete_mission;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView(R.layout.picture_mission_detail);
 
+        /*** Get GridView position ****/
         context = this;
-
         matrix = new Matrix(  );
+        intent = getIntent();
+        this.picture_mission = new int[10];
+        position = intent.getExtras().getInt( "position" );
+        sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
+        editor = sharedPreferences.edit();
+        admin_status = sharedPreferences.getString( "Admin","" );
+
+        /*** End Of Get GridView position ****/
+
+        /******* Layout setting *******/
+
+        /// if Admin_Login..
+
+        btn30 = (AppCompatButton) findViewById( R.id.point_30 );
+        btn50 = (AppCompatButton) findViewById( R.id.point_50 );
+        btn100 = (AppCompatButton) findViewById( R.id.point_100 );
+        btn150 = (AppCompatButton) findViewById( R.id.point_150 );
+
+        /// Others
+        complete_mission = (TextView)findViewById( R.id.picture_mission_detail_complete_mission_TextView );
+        point_layout = (LinearLayout) findViewById( R.id.point_layout );
+        TextView textView = (TextView) findViewById(R.id.picture_mission_detail_TextView);
+        imageView = (ImageView) findViewById( R.id.picture_mission_detail_ImageView );
+        button = (AppCompatButton) findViewById( R.id.picture_mission_detail_btn );
+
+        //// Set Toolbar
 
         Toolbar toolbar = (Toolbar)findViewById( R.id.picture_mission_detail_toolbar );
         setSupportActionBar(toolbar);
@@ -60,10 +101,9 @@ public class Picture_detail_Activity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        intent = getIntent();
-        position = intent.getExtras().getInt( "position" );
-        TextView textView = (TextView) findViewById(R.id.picture_mission_detail_TextView);
-        imageView = (ImageView) findViewById( R.id.picture_mission_detail_ImageView );
+        //// End Of Set Toolbar
+
+        //// Set ImageView & TextView
 
         switch (position) {
             case 0:
@@ -104,7 +144,17 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 textView.setText("팀원들과 함께 점프샷 찍기\n(발이 땅에 닿으면 실패!)");
                 break;
         }
-        button = (AppCompatButton) findViewById( R.id.picture_mission_detail_btn );
+
+        //// End Of Set ImageView & TextView
+
+        /// check adminLogin
+        setPointBtn( checkAdaminLogin() );
+
+        /******* End Of Layout setting *******/
+
+
+        /******* Event Setting *******/
+
         button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +177,90 @@ public class Picture_detail_Activity extends AppCompatActivity {
         }
     }
 
+    private boolean checkAdaminLogin() {
+        if(admin_status == ""){
+            if(checkPoint() == false){
+                button.setVisibility( View.GONE );
+                complete_mission.setVisibility( View.VISIBLE );
+            }else{
+                button.setVisibility( View.VISIBLE );
+                complete_mission.setVisibility( View.GONE );
+            }
+            point_layout.setVisibility( View.GONE );
+            return false;
+        }else{
+            if(!checkPoint()){
+                point_layout.setVisibility( View.GONE );
+                button.setVisibility( View.GONE );
+                complete_mission.setVisibility( View.VISIBLE );
+            }else{
+                point_layout.setVisibility( View.VISIBLE );
+            }
+            return true;
+        }
+    }
+
+    private void setPointBtn(boolean check){
+        if(point_flag){
+            if(check){
+                final int picture_mission_check = (int) Math.pow( 2,position );
+                AppCompatButton.OnClickListener onClickListener = new AppCompatButton.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()){
+                            case R.id.point_30:
+                                editor.putInt( "myPoint",sharedPreferences.getInt( "myPoint",0 )+30 );
+                                editor.putInt( "picture_mission_manager",picture_mission_check+sharedPreferences.getInt( "picture_mission_manager",0 ));
+                                editor.commit();
+                                setResult( 2222 );
+                                finish();
+                                break;
+                            case R.id.point_50:
+                                editor.putInt( "myPoint",sharedPreferences.getInt( "myPoint",0 )+50 );
+                                editor.putInt( "picture_mission_manager",picture_mission_check+sharedPreferences.getInt( "picture_mission_manager",0 ));
+                                editor.commit();
+                                setResult( 2222 );
+                                finish();
+                                break;
+                            case R.id.point_100:
+                                editor.putInt( "myPoint",sharedPreferences.getInt( "myPoint",0 )+100 );
+                                editor.putInt( "picture_mission_manager",picture_mission_check+sharedPreferences.getInt( "picture_mission_manager",0 ));
+                                editor.commit();
+                                setResult( 2222 );
+                                finish();
+                                break;
+                            case R.id.point_150:
+                                editor.putInt( "myPoint",sharedPreferences.getInt( "myPoint",0 )+150 );
+                                editor.putInt( "picture_mission_manager",picture_mission_check+sharedPreferences.getInt( "picture_mission_manager",0 ));
+                                editor.commit();
+                                setResult( 2222 );
+                                finish();
+                                break;
+                        }
+                    }
+                };
+                btn30.setOnClickListener( onClickListener );
+                btn50.setOnClickListener( onClickListener );
+                btn100.setOnClickListener( onClickListener );
+                btn150.setOnClickListener( onClickListener );
+            }
+        }else{
+
+        }
+
+    }
+
+    private boolean checkPoint(){
+        int temp = (int) Math.pow( 2,position );
+        int temp2 = sharedPreferences.getInt( "picture_mission_manager",0 );
+        byte a = (byte)(temp & temp2);
+        if(a == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     // 권한 요청
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -141,9 +275,7 @@ public class Picture_detail_Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult( requestCode, resultCode, intent );
-
         /* 내부 캐시 디렉토리 저장소 이용할 때
-
         if(requestCode == TAKE_PICTURE){
             Bitmap bitmap = (Bitmap) intent.getExtras().get( "data" );
             if(bitmap ==null){
@@ -155,10 +287,8 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 setResult( 2222,intent1 );
                 finish();
             }
-
         }
         */
-
         if(requestCode == REQUEST_TAKE_PHOTO){
             Intent intent1 = new Intent( getApplicationContext(),Picture_default_Activity.class );
             setResult(2222,intent1);
@@ -243,22 +373,7 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 if(Integer.parseInt( temp2[0] ) == position){
                     list[i].delete();
                 }
-                /*
-                if(position < 10) {
-                    temp = temp.substring( 0, 1 );
-                    int tt = Integer.parseInt( temp );
-                    if (position == tt) {
-                        list[i].delete();
-                    }
-                }else{
-                        temp = temp.substring( 0,2 );
-                        int aa = Integer.parseInt( temp );
-                        if(position == aa){
-                            list[i].delete();
-                        }
-                    }
-                */
-                }
+            }
         }
     }
 
@@ -288,6 +403,7 @@ public class Picture_detail_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setPointBtn(checkAdaminLogin());
         setThumbs();
     }
 }
