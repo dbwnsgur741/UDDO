@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import java.io.File;
+import java.io.IOException;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -42,17 +44,66 @@ public class ImageAdapter extends BaseAdapter  {
                 String[] temp2 = temp.split( "_" );
                 int aa = Integer.parseInt( temp2[0] );
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 16;
+                options.inSampleSize = 8;
                 matrix = new Matrix(  );
-                matrix.postRotate( 90 );
                 Bitmap bitmap1 = (Bitmap)BitmapFactory.decodeFile( String.valueOf( list[i] ),options );
                 int size = bitmap1.getWidth()>bitmap1.getHeight() ? bitmap1.getHeight() : bitmap1.getWidth();
                 bitmap1 = Bitmap.createBitmap( bitmap1,0,0,size,size,matrix,true );
+                try {
+                    ExifInterface exifInterface = new ExifInterface( String.valueOf( list[i] ) );
+                    int exifOrientation = exifInterface.getAttributeInt( ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED );
+                    bitmap1 = rotateBitmap(bitmap1,exifOrientation);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 mThumbIds[aa] = bitmap1;
             }
         }
     }
 
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate( 180 );
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate( 180 );
+                matrix.postScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate( 90 );
+                matrix.postScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate( 90 );
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate( -90 );
+                matrix.postScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate( -90 );
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap( bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true );
+            bitmap.recycle();
+            return bmRotated;
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public ImageAdapter(Context c){
         mContext = c;

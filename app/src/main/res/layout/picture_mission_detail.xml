@@ -13,16 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
-    <TextView
-        android:id="@+id/picture_mission_detail_toolbar_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#000000"
-        android:fontFamily="@font/seoulhangangcb"
-        android:textSize="18sp"
-        android:text="애국동지들과 추억 쌓기"/>
-</android.support.v7.widget.Toolbar>
+        <TextView
+            android:id="@+id/picture_mission_detail_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="@font/seoulhangangcb"
+            android:textSize="18sp"
+            android:text="애국동지들과 추억 쌓기"/>
+    </android.support.v7.widget.Toolbar>
 
     <View
     android:layout_marginTop="53dp"
@@ -43,7 +43,9 @@
         android:textAlignment="center"
         android:lineSpacingExtra="7sp"
         android:fontFamily="@font/seoulhangangcb"
-        android:text="배경이 적당한 장소에서 팀원이 \n모두 나오게 개성있는 단체사진을 촬영하시오."
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="아래에 나오는 사진은 옥인동 윤씨가옥의 내부 사진이다.사진에 나오는 배경과 똑같은 곳에서 손가락으로 하트 만들어서 사진찍기"
         android:textSize="15sp"
         android:textColor="#000000"
         tools:ignore="MissingConstraints"
@@ -53,7 +55,7 @@
         android:id="@+id/picture_mission_detail_ImageView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="200dp"
         android:background="@drawable/ic_sort_black_24dp"
         app:srcCompat="@drawable/img30"
         tools:ignore="MissingConstraints"
@@ -65,7 +67,7 @@
         android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="520dp"
         android:background="@drawable/box_rectangle_stroke"
         android:text="사진찍기"
         android:textSize="24dp"
@@ -121,7 +123,7 @@
 
     <TextView
         android:id="@+id/picture_mission_detail_complete_mission_TextView"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="525dp"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textColor="#ff0000"

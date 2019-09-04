@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -111,38 +112,38 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 textView.setText("팀원이 모두 나오게 단체사진을 찍으시오.");
                 break;
             case 1:
-                textView.setText("사진에 나오는 천우각을 찾아가\n팀원들과 함께  만세를 하는 사진을 찍으시오.\n(천우각이 나오고 팀원들이 만세하는\n사진이 나와야 성공 인정)");
+                textView.setText("사진에 나오는 천우각을 찾아가 팀원들과 함께  만세를 하는 사진을 찍으시오. (천우각이 나오고 팀원들이 만세하는 사진이 나와야 성공 인정)");
                 imageView.setImageResource(R.drawable.img31);
                 break;
             case 2:
-                textView.setText("아래에 나오는 사진은 옥인동 윤씨가옥의 내부 사진이다.\n사진에 나오는 배경과 똑같은 곳에서 손가락으로 하트 만들어서 사진찍기");
+                textView.setText("아래에 나오는 사진은 옥인동 윤씨가옥의 내부 사진이다.사진에 나오는 배경과 똑같은 곳에서 손가락으로 하트 만들어서 사진찍기");
                 imageView.setImageResource(R.drawable.img32);
                 break;
             case 3:
-                textView.setText("아래의 사진에 나오는 사진의 가옥은\n재기동 해풍부원군 윤택영 재실이다.\n해당 안내판을 찾아가서 안내판 읽는 팀원의 사진을 찍으시오.");
+                textView.setText("아래의 사진에 나오는 사진의 가옥은 재기동 해풍부원군 윤택영 재실이다. 해당 안내판을 찾아가서 안내판 읽는 팀원의 사진을 찍으시오.");
                 imageView.setImageResource(R.drawable.img33);
                 break;
             case 4:
-                textView.setText("보이는 사진은 관훈동 민씨 가옥이다.\n관훈동 민씨 가옥 마당에서 팀원끼리\n닭싸움 하는 사진을 찍으시오.");
+                textView.setText("보이는 사진은 관훈동 민씨 가옥이다. 관훈동 민씨 가옥 마당에서 팀원끼리 닭싸움 하는 사진을 찍으시오.");
                 imageView.setImageResource(R.drawable.img34);
                 break;
             case 5:
-                textView.setText("삼선동 오위장 김춘영의 가옥을 찾아가서\n구경하던 관람객과 같이 기념사진을 찍어라.");
+                textView.setText("삼선동 오위장 김춘영의 가옥을 찾아가서 구경하던 관람객과 같이 기념사진을 찍어라.");
                 imageView.setImageResource(R.drawable.img35);
                 break;
             case 6:
-                textView.setText("삼각동 도편수 이승엽 가옥을 찾아서\n안채 내부가 나오도록 사진찍기 ");
+                textView.setText("삼각동 도편수 이승엽 가옥을 찾아서 안채 내부가 나오도록 사진찍기 ");
                 imageView.setImageResource(R.drawable.img36);
                 break;
             case 7:
-                textView.setText("타임캡슐 광장에서 팀원들과 함께\n제일 자신있는 포즈로 사진찍기");
+                textView.setText("타임캡슐 광장에서 팀원들과 함께 제일 자신있는 포즈로 사진찍기");
                 imageView.setImageResource(R.drawable.img36);
                 break;
             case 8:
                 textView.setText("한복입은 외국인과 함께 사진 찍기");
                 break;
             case 9:
-                textView.setText("팀원들과 함께 점프샷 찍기\n(발이 땅에 닿으면 실패!)");
+                textView.setText("팀원들과 함께 점프샷 찍기 (발이 땅에 닿으면 실패!)");
                 break;
         }
 
@@ -282,7 +283,6 @@ public class Picture_detail_Activity extends AppCompatActivity {
             setResult(2222,intent1);
             finish();
         }else{
-            Log.d("GGGGGGGGGGGG","FFFFFFFFFFFF");
             Intent intent1 = new Intent( getApplicationContext(),Picture_default_Activity.class );
             setResult( 2222,intent1 );
             finish();
@@ -300,7 +300,6 @@ public class Picture_detail_Activity extends AppCompatActivity {
         File storageDir = context.getExternalFilesDir( Environment.DIRECTORY_PICTURES );
         File file = new File( String.valueOf( storageDir ) );
         File list[] = file.listFiles();
-        matrix.postRotate( 90 );
         for (int i = 0; i < list.length; i++) {
             if (list[i].getName() != null) {
                 String temp = list[i].getName();
@@ -308,12 +307,62 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 int tt = Integer.parseInt( temp2[0] );
                 if (position == tt) {
                     Bitmap bitmap1 = (Bitmap) BitmapFactory.decodeFile( String.valueOf( list[i] ) );
-                    int size = bitmap1.getWidth()>bitmap1.getHeight() ? bitmap1.getHeight() : bitmap1.getWidth();
-                    bitmap1 = Bitmap.createBitmap( bitmap1,0,0,size,size,matrix,true );
+                    try {
+                        ExifInterface exifInterface = new ExifInterface( String.valueOf( list[i] ) );
+                        int exifOrientation = exifInterface.getAttributeInt( ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED );
+                        bitmap1 = rotateBitmap(bitmap1,exifOrientation);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //int size = bitmap1.getWidth()>bitmap1.getHeight() ? bitmap1.getHeight() : bitmap1.getWidth();
+                    //bitmap1 = Bitmap.createBitmap( bitmap1,0,0,size,size,matrix,true );
                     imageView.setImageBitmap( bitmap1 );
                     imageView.setBackgroundResource( 0 );
                 }
             }
+        }
+    }
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate( 180 );
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate( 180 );
+                matrix.postScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate( 90 );
+                matrix.postScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate( 90 );
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate( -90 );
+                matrix.postScale( -1, 1 );
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate( -90 );
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap( bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true );
+            bitmap.recycle();
+            return bmRotated;
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
