@@ -5,15 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Environment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import java.io.File;
 
@@ -28,34 +25,13 @@ public class ImageAdapter extends BaseAdapter  {
     private Matrix matrix;
     private SharedPreferences sharedPreferences;
 
+    /*
     public void getThum(){
         getget();
-        /*
-        for(File tempFile : files){
-            Log.d("MyTag",tempFile.getName());
-            if(tempFile.getName() != null){
-                String temp = tempFile.getName();
-                temp = temp.substring( 0,1 );
-                tt = Integer.parseInt( temp );
-            }
-        }
-        */
-        /*
-        File file = new File(mContext.getCacheDir().toString());
-        File[] files = file.listFiles();
-        for(int i =0; i < files.length; i++){
-            if(files[i].getName().toString() !=null){
-                String temp = files[i].getName().toString();
-                temp = temp.substring( 0,1 );
-                tt = Integer.parseInt( temp );
-                Bitmap bitmap1 = (Bitmap) BitmapFactory.decodeFile( String.valueOf( files[i] ) );
-                mThumbIds[tt] = bitmap1;
-            }
-        }
-        */
     }
+    */
 
-    public void getget(){
+    public void setThums(){
 
         File storageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = new File( String.valueOf( storageDir ) );
@@ -81,7 +57,17 @@ public class ImageAdapter extends BaseAdapter  {
     public ImageAdapter(Context c){
         mContext = c;
         sharedPreferences = mContext.getSharedPreferences("NamSan",MODE_PRIVATE);
-        getget();
+
+        /**** If exist 0 byte img --> delete() *****/
+        File storageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File file = new File( String.valueOf( storageDir ) );
+        File list[] = file.listFiles();
+        for(int i =0; i < list.length; i++) {
+            if (list[i].length() == 0) {
+                list[i].delete();
+            }
+        }
+        setThums();
 
     }
 
@@ -132,18 +118,5 @@ public class ImageAdapter extends BaseAdapter  {
         }
 
         return gridViewAndroid;
-        /*
-        imageView = new ImageView( mContext );
-        if(mThumbIds[position] != null){
-            imageView.setImageBitmap( mThumbIds[position] );
-        } else {
-            imageView.setImageResource(R.drawable.noimage);
-
-        }
-        imageView.setScaleType( ImageView.ScaleType.FIT_XY );
-        imageView.setAdjustViewBounds(true);
-        imageView.setLayoutParams( new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT) );
-        return imageView;
-        */
     }
 }

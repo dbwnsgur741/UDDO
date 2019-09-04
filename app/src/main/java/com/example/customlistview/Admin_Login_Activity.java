@@ -11,7 +11,7 @@ import android.view.View;
 
 public class Admin_Login_Activity extends AppCompatActivity {
 
-    private final String ADMIN = "1";
+    private final String ADMIN = "adminadmin";
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private TextInputEditText textInputEditText;

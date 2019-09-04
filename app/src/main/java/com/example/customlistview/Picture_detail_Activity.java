@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -275,29 +276,15 @@ public class Picture_detail_Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult( requestCode, resultCode, intent );
-        /* 내부 캐시 디렉토리 저장소 이용할 때
-        if(requestCode == TAKE_PICTURE){
-            Bitmap bitmap = (Bitmap) intent.getExtras().get( "data" );
-            if(bitmap ==null){
-                return;
-            }
-            else{
-                savePicture( bitmap );
-                Intent intent1 = new Intent(getApplicationContext(),Picture_default_Activity.class);
-                setResult( 2222,intent1 );
-                finish();
-            }
-        }
-        */
-        if(requestCode == REQUEST_TAKE_PHOTO){
+        if(resultCode == RESULT_OK && requestCode == REQUEST_TAKE_PHOTO){
+            checkSameIndexImage();
             Intent intent1 = new Intent( getApplicationContext(),Picture_default_Activity.class );
             setResult(2222,intent1);
             finish();
-
-        }
-        else{
+        }else{
+            Log.d("GGGGGGGGGGGG","FFFFFFFFFFFF");
             Intent intent1 = new Intent( getApplicationContext(),Picture_default_Activity.class );
-            startActivity(intent1);
+            setResult( 2222,intent1 );
             finish();
         }
     }
@@ -308,43 +295,21 @@ public class Picture_detail_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /* : 내부 캐시 디렉토리 저장소 이용할 때
-    protected void savePicture(Bitmap bm){
-        String name = String.valueOf( position );
-        File storage = getCacheDir();
-        String fileName = name +".JPEG";
-        File tempFile = new File( storage,fileName );
-
-        try {
-            // 자동으로 빈 파일을 생성합니다.
-            tempFile.createNewFile();
-            // 파일을 쓸 수 있는 스트림을 준비합니다.
-            FileOutputStream out = new FileOutputStream(tempFile);
-            // 스트림 사용후 닫아줍니다.
-            bm.compress( Bitmap.CompressFormat.JPEG, 100, out );
-            out.close();
-        } catch (FileNotFoundException e) {
-            Log.e("MyTag","FileNotFoundException : " + e.getMessage());
-        } catch (IOException e) {
-            Log.e("MyTag","IOException : " + e.getMessage());
-        }
-    }
-    */
-
     protected void setThumbs() {
 
         File storageDir = context.getExternalFilesDir( Environment.DIRECTORY_PICTURES );
         File file = new File( String.valueOf( storageDir ) );
         File list[] = file.listFiles();
+        matrix.postRotate( 90 );
         for (int i = 0; i < list.length; i++) {
             if (list[i].getName() != null) {
                 String temp = list[i].getName();
                 String temp2[] = temp.split( "_" );
                 int tt = Integer.parseInt( temp2[0] );
-                matrix.postRotate( 180 );
-                Bitmap bitmap1 = (Bitmap) BitmapFactory.decodeFile( String.valueOf( list[i] ) );
-                bitmap1 = Bitmap.createBitmap( bitmap1,0,0,bitmap1.getWidth(),bitmap1.getHeight(),matrix,true );
                 if (position == tt) {
+                    Bitmap bitmap1 = (Bitmap) BitmapFactory.decodeFile( String.valueOf( list[i] ) );
+                    int size = bitmap1.getWidth()>bitmap1.getHeight() ? bitmap1.getHeight() : bitmap1.getWidth();
+                    bitmap1 = Bitmap.createBitmap( bitmap1,0,0,size,size,matrix,true );
                     imageView.setImageBitmap( bitmap1 );
                     imageView.setBackgroundResource( 0 );
                 }
@@ -355,7 +320,6 @@ public class Picture_detail_Activity extends AppCompatActivity {
     private File createImageFile() throws IOException{
         String timeStamp ="AAAA";
         String imageFileName = position + "_" + timeStamp;
-        //TODO : 인덱스가 같은 파일 이름이 있는지 확인 후 있으면 temp file 에다가 이름 저장 없으면 null로 초기화
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile( imageFileName,".jpg",storageDir );
         imageFilePath = image.getAbsolutePath();
@@ -366,15 +330,25 @@ public class Picture_detail_Activity extends AppCompatActivity {
         File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = new File( String.valueOf( storageDir ) );
         File list[] = file.listFiles();
+        ArrayList<File> list2 = new ArrayList<>(  );
         for(int i =0; i<list.length; i++){
+            if(list[i].length() == 0){
+                list[i].delete();
+            }
             if(list[i].getName() !=null){
                 String temp = list[i].getName();
                 String[] temp2 = temp.split( "_" );
                 if(Integer.parseInt( temp2[0] ) == position){
-                    list[i].delete();
+                    list2.add( list[i] );
                 }
             }
         }
+        if(list2.size() >= 2){
+            list2.get( 0 ).delete();
+        }else{
+            return;
+        }
+
     }
 
     private void dispatchTakePictureIntent() {
@@ -385,15 +359,12 @@ public class Picture_detail_Activity extends AppCompatActivity {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-                Log.d("@@@@@@@@@@@@",  photoFile.getName() );
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                checkSameIndexImage();
                 Uri photoURI = FileProvider.getUriForFile(this,"com.example.customlistview.fileprovider",photoFile);
-                Log.d("!!!!!!!!!!!!!!!", String.valueOf( photoURI ) );
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
