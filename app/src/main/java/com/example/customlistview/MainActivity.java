@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
         adapter.addItem("지피지기면 백전백승","5분마다 제공되는 퀴즈를 풀자.");
         adapter.addItem("사라진 고종황제의 비밀금고를 열어라!","퀴즈 풀고 금고의 비밀번호를 받자!");
-        adapter.addItem("일본군영( 4 )에서 아이템을 획득하라!","지도의 위치에서 보물을 찾아보자");
+        adapter.addItem("일본군영( D )에서 아이템을 획득하라!","지도의 위치에서 보물을 찾아보자");
         adapter.addItem("애국동지들과 추억쌓기","사진미션을 통해 추억을 쌓자");
         adapter.addItem("대결 경쟁을 통해 참다운 의병이 되어라!","NPC에게 미션을 받아보자");
         adapter.addItem("상대와의 대결을 통해 군자금을 확보하라!","다른 팀과의 대결을 진행해보자");

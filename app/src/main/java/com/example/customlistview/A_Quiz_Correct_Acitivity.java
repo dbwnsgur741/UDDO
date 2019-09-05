@@ -26,6 +26,9 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
     private final long currentTime = System.currentTimeMillis();
     // long currentTime : should be set when class started or it can be changed at every call
     private long maxTime;
+    public MySingleton mySingleton;
+    private TextView answer_desc;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -41,10 +44,12 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         //// End Of Tool bar Setting
+        answer_desc = (TextView)findViewById( R.id.always_quiz_correct_answer_desc );
         go_to_main = (ImageView) findViewById( R.id.correct_GoMission );
         wait_quiz = (ImageView) findViewById( R.id.correct_WaitQuiz );
         timer_text = (TextView)findViewById( R.id.correct_timer_view );
         timer_text.setText( "" );
+        mySingleton = MySingleton.getInstance(this);
         /******* End of Layout Setting*******/
 
         /******* Event Setting *******/
@@ -67,13 +72,22 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
         /******* End of event Setting *******/
 
         sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
+        mySingleton.setQuiz_answer_desc( sharedPreferences.getInt( "Quiz1",0 ) -1);
+        this.answer_desc.setText( mySingleton.getQuiz_answer_desc() );
+
         String timeValue = getResources().getString(R.string.timerValue);
         if(timeValue!=null) {
             maxTime = Long.parseLong(timeValue);
         }
         handler = new Handler();
-
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

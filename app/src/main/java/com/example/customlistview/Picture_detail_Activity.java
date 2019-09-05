@@ -116,11 +116,11 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 imageView.setImageResource(R.drawable.img31);
                 break;
             case 2:
-                textView.setText("아래에 나오는 사진은 옥인동 윤씨가옥의 내부 사진이다.사진에 나오는 배경과 똑같은 곳에서 손가락으로 하트 만들어서 사진찍기");
+                textView.setText("아래에 나오는 사진은 옥인동 윤씨가옥의 내부 사진이다.사진에 나오는 배경과 똑같은 곳에서 손가락으로 하트 만들어서 사진을 찍으시오.");
                 imageView.setImageResource(R.drawable.img32);
                 break;
             case 3:
-                textView.setText("아래의 사진에 나오는 사진의 가옥은 재기동 해풍부원군 윤택영 재실이다. 해당 안내판을 찾아가서 안내판 읽는 팀원의 사진을 찍으시오.");
+                textView.setText("아래의 사진에 나오는 가옥은 재기동 해풍부원군 윤택영 재실이다. 해당 안내판을 찾아가서 안내판 읽는 팀원의 사진을 찍으시오.");
                 imageView.setImageResource(R.drawable.img33);
                 break;
             case 4:
@@ -128,22 +128,22 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 imageView.setImageResource(R.drawable.img34);
                 break;
             case 5:
-                textView.setText("삼선동 오위장 김춘영의 가옥을 찾아가서 구경하던 관람객과 같이 기념사진을 찍어라.");
+                textView.setText("삼선동 오위장 김춘영의 가옥을 찾아가서 구경하던 관람객과 같이 기념사진을 찍으시오.");
                 imageView.setImageResource(R.drawable.img35);
                 break;
             case 6:
-                textView.setText("삼각동 도편수 이승엽 가옥을 찾아서 안채 내부가 나오도록 사진찍기 ");
+                textView.setText("삼각동 도편수 이승엽 가옥을 찾아서 안채 내부가 나오도록 사진을 찍으시오. ");
                 imageView.setImageResource(R.drawable.img36);
                 break;
             case 7:
-                textView.setText("타임캡슐 광장에서 팀원들과 함께 제일 자신있는 포즈로 사진찍기");
+                textView.setText("타임캡슐 광장에서 팀원들과 함께 제일 자신있는 포즈로 사진을 찍으시오.");
                 imageView.setImageResource(R.drawable.img36);
                 break;
             case 8:
-                textView.setText("한복입은 외국인과 함께 사진 찍기");
+                textView.setText("한복입은 외국인과 함께 사진을 찍으시오.");
                 break;
             case 9:
-                textView.setText("팀원들과 함께 점프샷 찍기 (발이 땅에 닿으면 실패!)");
+                textView.setText("팀원들과 함께 점프샷 사진을 찍으시오. (발이 땅에 닿으면 실패!)");
                 break;
         }
 

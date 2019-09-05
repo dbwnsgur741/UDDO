@@ -43,6 +43,16 @@
         android:background="@drawable/point_50"/>
 
     <TextView
+        android:id="@+id/always_quiz_correct_answer_desc"
+        android:fontFamily="@font/seoulhangangcb"
+        android:textSize="14sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=''/>
+
+    <TextView
         android:fontFamily="@font/seoulhangangcb"
         android:textSize="24sp"
         android:textColor="#000000"

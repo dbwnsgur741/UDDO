@@ -1,9 +1,13 @@
 package com.example.customlistview;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +27,7 @@ import java.util.List;
 
 public class QR_Code_Default_Sub_Activity extends AppCompatActivity {
 
+    private final String TAG = getClass().getSimpleName();
     private Button scan_btn;
     private BarcodeView scanner_view;
     private final String[] QR_CODE= {"924512","936802","966509","999910"};
@@ -79,6 +84,16 @@ public class QR_Code_Default_Sub_Activity extends AppCompatActivity {
                 }
             }
         } );
+
+        // 6.0 마쉬멜로우 이상일 경우에는 권한 체크 후 권한 요청
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission( Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ) {
+                Log.d(TAG, "권한 설정 완료");
+            } else {
+                Log.d(TAG, "권한 설정 요청");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
 
         scan_btn.setOnClickListener(new View.OnClickListener() {
             @Override

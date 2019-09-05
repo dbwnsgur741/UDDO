@@ -15,12 +15,15 @@ public class MySingleton {
     private int quiz_answer; // 정답
     private int quiz_num ; // 퀴즈 번호
     private String what_quiz ; // 레이아웃 왼쪽 상단
+    private static String[] quiz_answer_desc_array; // 퀴즈 해설 배열
+    private String quiz_answer_desc; // 퀴즈 해설
 
     public static MySingleton getInstance(Context context) {
         if(instance == null){
             instance = new MySingleton(context);
             MySingleton.quiz_desc_array = context.getResources().getStringArray(R.array.ox_quiz_list);
             MySingleton.quiz_answer_array= context.getResources().getIntArray(R.array.ox_quiz_answer);
+            MySingleton.quiz_answer_desc_array = context.getResources().getStringArray( R.array.quiz_answer_desc_list );
         }
         MySingleton.context = context;
         return instance;
@@ -35,6 +38,12 @@ public class MySingleton {
         return what_quiz;
     }
 
+    public String getQuiz_answer_desc(){
+        return quiz_answer_desc;
+    }
+    public void setQuiz_answer_desc(int quiz_num){
+        this.quiz_answer_desc = quiz_answer_desc_array[quiz_num];
+    }
     public int getQuiz_num() {
         return quiz_num;
     }

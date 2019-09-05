@@ -57,6 +57,7 @@ public class A_Quiz_Detail_Activity extends AppCompatActivity implements View.On
         mySingleton.setQuiz_num(sharedPreferences.getInt("Quiz1", 0));
         mySingleton.setQuiz_desc(sharedPreferences.getInt("Quiz1",0));
 
+
         this.quiz_description = mySingleton.getQuiz_desc();
         this.what_quiz = mySingleton.getWhat_quiz();
 
