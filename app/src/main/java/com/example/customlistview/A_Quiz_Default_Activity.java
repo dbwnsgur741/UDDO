@@ -37,6 +37,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     private final long currentTime = System.currentTimeMillis();
     // long currentTime : should be set when class started or it can be changed at every call
     private long maxTime;
+    private TextView warningText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
         timer_textview = (TextView)findViewById( R.id.timer_textview );
         tmr = (TextView) findViewById(R.id.timer_layout);
         ib = (ImageButton) findViewById(R.id.next_step);
+        warningText = (TextView)findViewById( R.id.always_quiz_warning );
         /******* End of Layout Setting*******/
 
         /******* Event Setting *******/
@@ -143,6 +145,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
             setTimer_check();
         }else{
             timer_textview.setText( "모든 문제를 풀었습니다!" );
+            warningText.setVisibility( View.INVISIBLE );
             ib.setVisibility( View.INVISIBLE );
         }
     }

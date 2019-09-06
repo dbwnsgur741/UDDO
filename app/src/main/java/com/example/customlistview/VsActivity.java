@@ -26,6 +26,7 @@ public class VsActivity extends AppCompatActivity {
     private TextView textView;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private TextView waringTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class VsActivity extends AppCompatActivity {
 
         textView = (TextView) findViewById( R.id.train_mission_complete_mission_TextView );
         imageButton = (ImageButton)findViewById( R.id.msq_default_btn );
+        waringTextView = (TextView)findViewById( R.id.vs_mission_warning );
 
         /// if Admin_Login..
         point_layout = findViewById( R.id.point_layout );
@@ -85,6 +87,7 @@ public class VsActivity extends AppCompatActivity {
             }else{
                 point_layout.setVisibility( View.GONE );
                 imageButton.setVisibility( View.GONE );
+                waringTextView.setVisibility( View.GONE );
                 textView.setVisibility( View.VISIBLE );
             }
             return false;
@@ -94,6 +97,7 @@ public class VsActivity extends AppCompatActivity {
             }else{
                 point_layout.setVisibility( View.GONE );
                 imageButton.setVisibility( View.GONE );
+                waringTextView.setVisibility( View.GONE );
                 textView.setVisibility( View.VISIBLE );
             }
             return true;

@@ -1,5 +1,6 @@
 package com.example.customlistview;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
@@ -26,7 +27,8 @@ public class TrainMissionActivity extends AppCompatActivity {
     private LinearLayout point_layout;
     private static boolean event_check = true;
     private TextView textView;
-
+    private Context context;
+    private TextView warningtextView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -34,8 +36,9 @@ public class TrainMissionActivity extends AppCompatActivity {
 
         /***** Set Layout *****/
 
-        //// Set Toolbar
+        context = this;
 
+        //// Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.msq_default_toolbar);
         TextView toolbar_text = (TextView) findViewById( R.id.msq_default_toolbar_text );
         toolbar_text.setText( "대결 경쟁을 통해\n참다운 의병이 되어라!" );
@@ -50,6 +53,7 @@ public class TrainMissionActivity extends AppCompatActivity {
         //// End Of Set Toolbar
         textView = (TextView) findViewById( R.id.train_mission_complete_mission_TextView );
         imageButton = (ImageButton)findViewById( R.id.msq_default_btn );
+        warningtextView = (TextView)findViewById( R.id.trainmission_quiz_warning );
 
         /// if Admin_Login..
         point_layout = findViewById( R.id.point_layout );
@@ -84,6 +88,7 @@ public class TrainMissionActivity extends AppCompatActivity {
             }else{
                 point_layout.setVisibility( View.GONE );
                 imageButton.setVisibility( View.GONE );
+                warningtextView.setVisibility( View.GONE );
                 textView.setVisibility( View.VISIBLE );
             }
             return false;
@@ -93,6 +98,7 @@ public class TrainMissionActivity extends AppCompatActivity {
             }else{
                 point_layout.setVisibility( View.GONE );
                 imageButton.setVisibility( View.GONE );
+                warningtextView.setVisibility( View.GONE );
                 textView.setVisibility( View.VISIBLE );
             }
             return true;

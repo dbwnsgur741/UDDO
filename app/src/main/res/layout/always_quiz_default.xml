@@ -82,5 +82,17 @@
         android:layout_height="54dp"
         android:layout_gravity="center"
         android:background="@drawable/app_main_btn_1" />
+    <TextView
+        android:id="@+id/always_quiz_warning"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_toRightOf="@+id/timer_textview"
+        android:fontFamily="@font/seoulhangangcb"
+        android:text="뒤로가기가 안 되니 신중히 버튼을 눌러주시기 바랍니다"
+        android:textSize="14sp"
+        android:textColor="#ff0000" />
 
 </LinearLayout>
