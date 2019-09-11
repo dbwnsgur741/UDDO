@@ -15,7 +15,27 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="38dp"
         tools:layout_editor_absoluteY="0dp">
+        <ImageView
+            android:layout_marginLeft="18dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/rank"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="19dp" />
+        <TextView
+            android:text="34/100"
+            android:id="@+id/my_star_text"
+            android:layout_marginLeft="8dp"
+            android:layout_width="38dp"
+            android:layout_height="15dp"            android:visibility="invisible"
 
+            android:fontFamily="@font/seoulhangangcb"
+            android:textColor="#000000"
+            android:textSize="12dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="319dp"
+            tools:layout_editor_absoluteY="19dp" />
         <ImageView
             android:layout_width="31dp"
             android:layout_height="26dp"
@@ -36,25 +56,7 @@
             tools:layout_editor_absoluteY="19dp"
             android:text="300P"/>
 
-        <ImageView
-            android:layout_marginLeft="18dp"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@drawable/rank"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="19dp" />
-        <TextView
-            android:text="34/100"
-            android:id="@+id/my_star_text"
-            android:layout_marginLeft="8dp"
-            android:layout_width="38dp"
-            android:layout_height="15dp"
-            android:fontFamily="@font/seoulhangangcb"
-            android:textColor="#000000"
-            android:textSize="12dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="319dp"
-            tools:layout_editor_absoluteY="19dp" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

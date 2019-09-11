@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/mapTitle"
             android:text="전체 지도"
             android:textSize="20sp"
             android:textColor="#000"

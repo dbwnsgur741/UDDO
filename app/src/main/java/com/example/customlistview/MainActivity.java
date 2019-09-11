@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private String admin_status;
     private TextView admin_textView;
-
+    private ImageView map_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,15 @@ public class MainActivity extends AppCompatActivity
         sf_txt = sharedPreferences.getString("NickName","");
         mp = sharedPreferences.getInt("myPoint",0);
         admin_status = sharedPreferences.getString( "Admin","" );
+        map_button = findViewById(R.id.mapButton);
+        map_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,PopupActivity.class);
+                startActivity(intent);
+            }
+        });
         //// End Of SharedPreferences
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -159,6 +169,7 @@ public class MainActivity extends AppCompatActivity
         TextView point = (TextView) findViewById(R.id.my_point_text);
         point.setText(String.valueOf(mp));
         adapter.setTimer_check();
+
     }
 
     @Override

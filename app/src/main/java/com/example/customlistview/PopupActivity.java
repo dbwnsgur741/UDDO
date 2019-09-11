@@ -54,9 +54,7 @@ public class PopupActivity extends AppCompatActivity implements View.OnTouchList
         final Dialog dialog = new Dialog( this, android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen );
         dialog.setContentView( view );
         view.setOnTouchListener( this );
-
-        appCompatImageView = (AppCompatImageView) findViewById( R.id.txtText );
-        appCompatImageView.setOnClickListener( new View.OnClickListener() {
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isImageFitToScreen) {
@@ -67,7 +65,11 @@ public class PopupActivity extends AppCompatActivity implements View.OnTouchList
                     dialog.dismiss();
                 }
             }
-        } );
+        };
+        appCompatImageView = (AppCompatImageView) findViewById( R.id.txtText );
+        appCompatImageView.setOnClickListener( clickListener );
+        TextView popupTitle = (TextView)findViewById(R.id.mapTitle);
+        popupTitle.setOnClickListener(clickListener);
 
         /*
         appCompatImageView = (AppCompatImageView)findViewById( R.id.txtText );

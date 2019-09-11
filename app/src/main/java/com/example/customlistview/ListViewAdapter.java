@@ -119,7 +119,10 @@ public class ListViewAdapter extends BaseAdapter {
             return;
         }
         savedTime = sharedPreferences.getLong("Timer", currentTime);
-
+        if (sharedPreferences.getInt( "Quiz1",0 )>9){
+            timer.setVisibility(View.GONE);
+            return;
+        }
         if (currentTime - savedTime  > maxTime){ // over 5 mins
             timer.setText("퀴즈풀기!");
             handler.removeCallbacksAndMessages(null);

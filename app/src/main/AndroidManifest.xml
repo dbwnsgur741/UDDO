@@ -5,7 +5,7 @@
 
     <uses-feature
         android:name="android.hardware.CAMERA"
-        android:required="true" />
+        android:required="false" />
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -63,9 +63,7 @@
         <activity
             android:name=".QR_Code_Default_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".QR_Code_Detail_Activity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".QR_Code_Default_Sub_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
