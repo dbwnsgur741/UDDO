@@ -69,14 +69,14 @@ android:orientation="vertical">
         android:layout_marginTop="440dp"
         android:textSize="15sp"
         android:textColor="#000000"
-        android:lineSpacingExtra="15dp"
-        android:text="(황제의 비밀금고 첫번째 비밀번호입니다.\n꼭 기억하세요.)" />
+        android:lineSpacingExtra="10dp"
+        android:text="(황제의 비밀금고 첫번째 비밀번호입니다. 꼭 기억하세요.)\n찾은 숫자를 모두 더하시오.\n한자리 숫자가 될 때까지 각자리수를 더하시오." />
 
     <ImageButton
         android:id="@+id/msq_detail_btn"
         android:layout_width="324dp"
         android:layout_height="54dp"
-        android:layout_marginTop="508dp"
+        android:layout_marginTop="520dp"
         android:background="@drawable/app_main_btn_4"
         android:layout_centerHorizontal="true" />
 

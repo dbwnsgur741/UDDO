@@ -23,7 +23,7 @@
             android:textColor="#000000"
             android:fontFamily="@font/seoulhangangcb"
             android:textSize="18sp"
-            android:text="일본군영(D)에서 아이템을 획득하라!"/>
+            android:text="일본군영(B)에서 아이템을 획득하라!"/>
     </android.support.v7.widget.Toolbar>
 
     <View

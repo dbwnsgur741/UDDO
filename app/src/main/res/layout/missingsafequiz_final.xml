@@ -47,7 +47,7 @@
         android:id="@+id/msq_detail_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="[속보] 독립군이 일본이 훔친 황제의 비밀금고를 찾았다는 소식입니다. 결국 이 사건은 대한제국의 독립을 막으려는 일본의 추악한 소행이었습니다.\n\n이제 여러분은 문제의 답을 조합해 마지막으로 ( A )의 장소에 있는 MG를 찾아가 비밀금고를 열고 독립자금을 확보하기 바랍니다."/>
+        android:text="[속보] 독립군이 일본이 훔친 황제의 비밀금고를 찾았다는 소식입니다. 결국 이 사건은 대한제국의 독립을 막으려는 일본의 추악한 소행이었습니다.\n\n이제 여러분은 문제의 답을 조합해 마지막으로 지도의 김춘영가옥에 있는 동지를 찾아가  비밀금고를 열고 독립자금을 확보하기 바랍니다."/>
 
     <ImageButton
         android:id="@+id/msq_final_review"

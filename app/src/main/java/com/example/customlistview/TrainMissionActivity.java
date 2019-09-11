@@ -41,7 +41,7 @@ public class TrainMissionActivity extends AppCompatActivity {
         //// Set Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.msq_default_toolbar);
         TextView toolbar_text = (TextView) findViewById( R.id.msq_default_toolbar_text );
-        toolbar_text.setText( "대결 경쟁을 통해\n참다운 의병이 되어라!" );
+        toolbar_text.setText( "대결 경쟁을 통해\n참다운 독립군이 되어라!" );
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null){
