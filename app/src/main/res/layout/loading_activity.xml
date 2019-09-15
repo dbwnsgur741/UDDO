@@ -9,11 +9,11 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="203dp"
         android:id="@+id/loading_Image"
         android:layout_width="219dp"
         android:layout_height="139dp"
         android:layout_gravity="center"
+        android:layout_marginTop="203dp"
         android:contentDescription="TODO"
         android:src="@drawable/group"
         tools:ignore="MissingConstraints" />

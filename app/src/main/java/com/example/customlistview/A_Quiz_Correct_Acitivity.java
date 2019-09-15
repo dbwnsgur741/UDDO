@@ -28,7 +28,8 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
     private long maxTime;
     public MySingleton mySingleton;
     private TextView answer_desc;
-
+    private Runnable runnableCode;
+    private boolean runnableKill = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -72,8 +73,11 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
         /******* End of event Setting *******/
 
         sharedPreferences = getSharedPreferences( "NamSan",MODE_PRIVATE );
+        sharedPreferences.edit().remove("Timer").commit();
+        sharedPreferences.edit().putLong("Timer", currentTime).apply();
         mySingleton.setQuiz_answer_desc( sharedPreferences.getInt( "Quiz1",0 ) -1);
         this.answer_desc.setText( mySingleton.getQuiz_answer_desc() );
+        Log.v("Timer",sharedPreferences.getLong("Timer", currentTime)+" ");
 
         String timeValue = getResources().getString(R.string.timerValue);
         if(timeValue!=null) {
@@ -102,8 +106,7 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
     }
     @Override
     public void onPause() {
-        handler.removeCallbacksAndMessages(null);
-
+        runnableKill=true;
         super.onPause();
     }
 
@@ -118,17 +121,16 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
 
         if (currentTime - savedTime  > maxTime){ // over 5 mins
             timer_text.setText( "퀴즈풀기!" );
-            handler.removeCallbacksAndMessages(null);
-            sharedPreferences.edit().remove("Timer").apply();
-
+            sharedPreferences.edit().remove("Timer").commit();
+            runnableKill=true;
             return;
         }
 
         if (currentTime == savedTime){
             sharedPreferences.edit().putLong("Timer", currentTime).apply();
         }
-
-        final Runnable runnableCode = new Runnable() {
+        runnableKill=false;
+        runnableCode = new Runnable() {
             @Override
             public void run() {
                 long TIME_NOW = System.currentTimeMillis();
@@ -139,8 +141,8 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
 
                 if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     timer_text.setText( "퀴즈풀기!" );
-                    handler.removeCallbacksAndMessages(null);
                     sharedPreferences.edit().remove("Timer").apply();
+                    runnableKill=true;
                 } else {
                     if (String.valueOf( sec ).length() == 1) {
                         timer_text.setText( String.format( "0%d:0%d", min, sec ) );
@@ -148,6 +150,7 @@ public class A_Quiz_Correct_Acitivity extends AppCompatActivity {
                         timer_text.setText( String.format( "0%d:%d", min, sec ) );
                     }
                 }
+                if(!runnableKill)
                 handler.postDelayed( this, 1000 );
             }
         };

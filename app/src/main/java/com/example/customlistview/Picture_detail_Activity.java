@@ -137,13 +137,17 @@ public class Picture_detail_Activity extends AppCompatActivity {
                 break;
             case 7:
                 textView.setText("타임캡슐 광장에서 팀원들과 함께 제일 자신있는 포즈로 사진을 찍으시오.");
-                imageView.setImageResource(R.drawable.img36);
+                imageView.setImageResource(R.drawable.img37);
                 break;
             case 8:
                 textView.setText("한복입은 외국인과 함께 사진을 찍으시오.");
+                imageView.setImageResource(R.drawable.img38);
+
                 break;
             case 9:
                 textView.setText("팀원들과 함께 점프샷 사진을 찍으시오. (발이 땅에 닿으면 실패!)");
+                imageView.setImageResource(R.drawable.img39);
+
                 break;
         }
 

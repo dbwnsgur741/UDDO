@@ -38,7 +38,8 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     // long currentTime : should be set when class started or it can be changed at every call
     private long maxTime;
     private TextView warningText;
-
+    Runnable runnableCode;
+    private boolean runnableKill = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,16 +96,19 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
         savedTime = sharedPreferences.getLong("Timer", currentTime);
 
         if (currentTime - savedTime  > maxTime){ // over 5 mins
+            Log.v("outovertime","outovertime");
             overTimeSetting();
             return;
         }
 
         if (currentTime == savedTime){ // first access
+            Log.v("overtimefirst","overtimefirst");
             overTimeSetting();
             return;
         }
+        runnableKill=false;
 
-        final Runnable runnableCode = new Runnable() {
+        runnableCode = new Runnable() {
             @Override
             public void run() { //remain some time
                 remainTimeSetting();
@@ -116,6 +120,8 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
 
                 if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     overTimeSetting();
+                    Log.v("overtime","overtime");
+
                 } else {
                     if (String.valueOf( sec ).length() == 1) {
                         tmr.setText( String.format( "0%d:0%d", min, sec ) );
@@ -123,6 +129,7 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
                         tmr.setText( String.format( "0%d:%d", min, sec ) );
                     }
                 }
+                if(!runnableKill)
                 handler.postDelayed( this, 1000 );
             }
         };
@@ -131,9 +138,8 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     private void overTimeSetting(){
         tmr.setText( "퀴즈풀기!" );
         ib.setVisibility( View.VISIBLE );
-        handler.removeCallbacksAndMessages(null);
         sharedPreferences.edit().remove("Timer").apply();
-    }
+runnableKill=true;    }
     private void remainTimeSetting(){
         ib.setVisibility( View.GONE );
     }
@@ -141,6 +147,8 @@ public class A_Quiz_Default_Activity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        Log.v("Timer",sharedPreferences.getLong("Timer", currentTime)+" ");
+
         if(sp_quiz_num < 10){
             setTimer_check();
         }else{

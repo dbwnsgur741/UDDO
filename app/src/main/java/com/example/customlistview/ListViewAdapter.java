@@ -29,7 +29,8 @@ public class ListViewAdapter extends BaseAdapter {
     private final long currentTime = System.currentTimeMillis();
     // long currentTime : should be set when class started or it can be changed at every call
     private long maxTime;
-
+    private  Runnable runnableCode;
+    private boolean runnableKill=false;
     public ListViewAdapter(){
         super();
         handler = new Handler();
@@ -125,17 +126,18 @@ public class ListViewAdapter extends BaseAdapter {
         }
         if (currentTime - savedTime  > maxTime){ // over 5 mins
             timer.setText("퀴즈풀기!");
-            handler.removeCallbacksAndMessages(null);
-            sharedPreferences.edit().remove("Timer").apply();
+            sharedPreferences.edit().remove("Timer").commit();
+            runnableKill=true;
             return;
         }
 
         if (currentTime == savedTime){
             timer.setText("퀴즈풀기!");
-            handler.removeCallbacksAndMessages(null);
+            runnableKill=true;
             return;
         }
-        final Runnable runnableCode = new Runnable() {
+        runnableKill = false;
+        runnableCode = new Runnable() {
             @Override
             public void run() {
                 long TIME_NOW = System.currentTimeMillis();
@@ -145,8 +147,9 @@ public class ListViewAdapter extends BaseAdapter {
                 int sec = remainTimeSec % 60;
                 if (TIME_NOW - savedTime  > maxTime){ // over 5 mins
                     timer.setText("퀴즈풀기!");
-                    handler.removeCallbacksAndMessages(null);
                     sharedPreferences.edit().remove("Timer").apply();
+
+                    runnableKill=true;
                 } else {
                     if (String.valueOf( sec ).length() == 1) {
                         timer.setText( String.format( "0%d:0%d", min, sec ) );
@@ -154,6 +157,7 @@ public class ListViewAdapter extends BaseAdapter {
                         timer.setText( String.format( "0%d:%d", min, sec ) );
                     }
                 }
+                if(!runnableKill)
                 handler.postDelayed( this, 1000 );
             }
         };

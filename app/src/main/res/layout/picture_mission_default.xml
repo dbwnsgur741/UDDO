@@ -55,6 +55,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/seoulhangangcb"
         android:textSize="14sp"
-        android:text="사진촬영 후 최정미션 장소인 김춘영가옥에서 미션가이드에게 모든 사진을 확인받고 엽전을 받으시오."/>
+        android:text="사진촬영 후 최종미션 장소인 김춘영가옥에서 미션가이드에게 모든 사진을 확인받고 엽전을 받으시오."/>
 
 </LinearLayout>

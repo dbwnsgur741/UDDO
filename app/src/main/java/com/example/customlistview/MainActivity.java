@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         // check admin status
         checkAdminLogin();
+        final long currentTime = System.currentTimeMillis();
 
         // <!-- 다시돌아왔을때 포인트 변화 부분 --!> //
         sharedPreferences = getSharedPreferences("NamSan",MODE_PRIVATE);
